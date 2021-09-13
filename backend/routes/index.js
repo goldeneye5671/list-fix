@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(
       path.resolve(__dirname, '../../frontend', 'build', 'index.html')
     );
+    
   });
 
   // Serve the static assets in the frontend's build folder
