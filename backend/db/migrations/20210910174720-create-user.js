@@ -1,42 +1,40 @@
 'use strict';
-const { Validator } = require('sequelize');
-
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [4, 30],
-        isNotEmail(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error('Cannot be an email.');
-          }
-        },
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('Users', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [3, 256],
-        isEmail(value) {
-          if (Validator.isEmail(value)){
-            throw new Error('Must be an email')
-          }
-        }
+      username: {
+        type: Sequelize.STRING(30),
+        allowNull: false,
+        unique: true
       },
-    },
-    hashedPassword: {
-      type: DataTypes.STRING.BINARY,
-      allowNull: false,
-      validate: {
-        len: [60, 60]
+      email: {
+        type: Sequelize.STRING(256),
+        allowNull: false,
+        unique: true
       },
-    },
-  }, {});
-  User.associate = function(models) {
-    // associations can be defined here
-  };
-  return User;
+      hashedPassword: {
+        type: Sequelize.STRING.BINARY,
+        allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
+      }
+    });
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('Users');
+  }
 };

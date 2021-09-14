@@ -41,4 +41,7 @@ const validateSignup = [
     }),
   );
 
+  router.get('/')
+  router.put('/')
+
 module.exports = router;

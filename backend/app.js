@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 const indexRoutes = require('./routes/index');
 const { environment } = require('./config');
+const {restoreUser, requireAuth} = require('./utils/auth');
 const isProduction = environment === 'production';
 
 const app = express();
@@ -31,7 +32,8 @@ app.use(csurf({
     }
 }))
 
-app.use('/', indexRoutes)
+app.use('/', indexRoutes);
+app.use(restoreUser);
 
 app.use((err, _req, _res, next) => {
     // check if error is a Sequelize error:
