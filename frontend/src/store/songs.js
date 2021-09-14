@@ -63,6 +63,18 @@ export const getAllSongs = () => async (dispatch) => {
     }
 }
 
+export const getAllSongsUser = (userId) => async (dispatch) => {
+    const response = await fetch(`/api/`)
+}
+
+export const getSongOne = (songId) => async (dispatch) => {
+    const response = await fetch(`/api/songs/${songId}`);
+    if (response.ok){
+        const song = await response.json();
+        dispatch(songGetOne(song));
+    }
+}
+
 const initialState = {
 
 }
@@ -75,8 +87,13 @@ const songReducer = (state = initialState, action) => {
                 allSongs[song.id] = song
             });
             return {
-                ...state,
                 ...allSongs
+            }
+        case SONG_GET_ONE:
+            console.log("Action executed");
+            const oneSong = {...action.song}
+            return {
+                ...oneSong
             }
         default:
             return state;
