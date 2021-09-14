@@ -64,7 +64,11 @@ export const getAllSongs = () => async (dispatch) => {
 }
 
 export const getAllSongsUser = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/`)
+    const response = await fetch(`/api/users/${userId}/songs`);
+    if (response.ok){
+        const songs = await response.json();
+        dispatch(songGetUser(songs));
+    }
 }
 
 export const getSongOne = (songId) => async (dispatch) => {
