@@ -8,14 +8,14 @@ export default function SongForm() {
     const userInfo = useSelector(state => state.session);
     const userAlbums = useSelector(state => state.album)
     const dispatch = useDispatch();
-    dispatch(getAlbumUser(userInfo.user.id));
     const [title, setTitle] = React.useState('');
     const [songUrl, setSongUrl] = React.useState('');
     const [selectedAlbumId, setSelectedAlbumId] = React.useState(1)
-
-    // React.useEffect( () => {
-        
-    // }, []);
+    
+    React.useEffect( () => {
+        dispatch(getAlbumUser(userInfo.user.id));
+        console.log();
+    }, []);
 
     return (
         <form>

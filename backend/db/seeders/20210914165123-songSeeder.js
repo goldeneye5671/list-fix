@@ -12,7 +12,7 @@ module.exports = {
     [
       {
         userId: 1,
-        albumId: 1,
+        albumId: 5,
         songUrl: "https://www.google.com",
         title: "Google",
         createdAt: new Date(),
@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         userId: 1,
-        albumId: 1,
+        albumId: 5,
         songUrl: "https://www.google.com",
         title: "Google2",
         createdAt: new Date(),
@@ -28,7 +28,7 @@ module.exports = {
       },
       {
         userId: 1,
-        albumId: 1,
+        albumId: 5,
         songUrl: "https://www.google.com",
         title: "Google3",
         createdAt: new Date(),
@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         userId: 1,
-        albumId: 1,
+        albumId: 5,
         songUrl: "https://www.google.com",
         title: "Google4",
         createdAt: new Date(),
@@ -44,7 +44,7 @@ module.exports = {
       },
       {
         userId: 1,
-        albumId: 1,
+        albumId: 5,
         songUrl: "https://www.google.com",
         title: "Google Fanally",
         createdAt: new Date(),

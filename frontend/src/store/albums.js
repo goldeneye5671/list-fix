@@ -73,9 +73,9 @@
 
  export const getAlbumUser = (userId) => async(dispatch) => {
      const response = await fetch(`/api/users/${userId}/albums`);
-     console.log(userId)
      if (response.ok){
          const albums = await response.json();
+         console.log(albums)
          dispatch(albumGetUser(albums));
      }
  }
@@ -101,9 +101,9 @@
              }
         case ALBUM_GET_USER:
             const allUserAlbums = {...action.albums}
-            return {
-                ...allUserAlbums
-            }
+            console.log("Albums", allUserAlbums);
+
+            return allUserAlbums
          default:
              return state;
      }
