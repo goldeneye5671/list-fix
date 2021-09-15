@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAlbumOne } from '../../store/albums'
+import { getAlbumOne } from '../../../store/albums'
 import {useParams} from 'react-router-dom'
 
 export default function Album() {

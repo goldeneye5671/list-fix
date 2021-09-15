@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {useParams} from 'react-router-dom';
-import { getSongOne } from '../../store/songs'
+import { getSongOne } from '../../../store/songs';
 
 export default function Song() {
     const {songId} = useParams();

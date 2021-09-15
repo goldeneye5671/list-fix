@@ -5,6 +5,8 @@
  * delete songs
  */
 
+import { csrfFetch } from "./csrf";
+
 const SONG_CREATE = 'song/SONG_CREATE';
 const SONG_UPDATE = 'song/SONG_UPDATE';
 const SONG_GET = 'song/SONG_GET';
@@ -56,7 +58,7 @@ const songDelete = (deletedSong) => ({
 
 
 export const createSong = (songToAdd) => async (dispatch) => {
-    const response = await fetch(
+    const response = await csrfFetch(
         `/api/songs`,
         {
             method: `POST`,
@@ -64,15 +66,15 @@ export const createSong = (songToAdd) => async (dispatch) => {
             body: JSON.stringify(songToAdd)
         });
     if (response.ok) {
-        const message = await response.json();
-        dispatch(songCreate(songToAdd));
+        const addedSong = await response.json();
+        dispatch(songCreate(addedSong));
     }
 }
 
 //get all songs, reguardless of user
-export const getAllSongs = () => async (dispatch) => {
-    const response = await fetch(`/api/songs`);
-
+export const getAllSongs = (limit = null) => async (dispatch) => {
+    const response = limit ? await fetch(`/api/songs?limit=${limit}`) : await fetch(`/api/songs`);
+    console.log("Songs: ", limit)
     if (response.ok) {
         const songs = await response.json();
         dispatch(songGetAll(songs));
@@ -115,9 +117,20 @@ const songReducer = (state = initialState, action) => {
                 ...oneSong
             }
         case SONG_CREATE:
-            const message = {...state, ...action.message}
+            console.log("Message in Reducer: ", action.message)
+            if (!state[action.message.id]){
+                const newState = {
+                    ...state,
+                    [action.message.id]: action.message
+                }
+                return newState
+            }
             return {
-                ...message
+                ...state,
+                [action.message.id]: {
+                    ...state[action.message.id],
+                    ...action.message
+                }
             }
         default:
             return state;

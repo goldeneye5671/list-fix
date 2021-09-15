@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAlbumUser } from '../../store/albums';
-import { createSong } from '../../store/songs';
+import { getAlbumUser } from '../../../store/albums';
+import { createSong } from '../../../store/songs';
 
 export default function SongForm({isEditForm}) {
     //need to get the id and name of albums from the backend and present them in the form
@@ -42,16 +42,16 @@ export default function SongForm({isEditForm}) {
             }
             data['userId'] = session.user.id;
             let message = await dispatch(createSong(data));
-
+            console.log("Message: ", message)
         }
     }
 
     return (
         <form>
             <div className="errors-song">
-                {errors.length > 0 ? <h2>Errors</h2> : null}
-                {errors && errors.map(error => (
-                    <p>{error}</p>
+            {errors.length > 0 ? <h2>Errors</h2> : null}
+                {errors && errors.map((error, errorid) => (
+                    <p key={errorid}>{error}</p>
                 ))}
             </div>
             <label>Title of song</label>

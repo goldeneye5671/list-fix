@@ -4,6 +4,7 @@
  * update albums
  * delete albums
  */
+import { csrfFetch } from "./csrf";
 
  const ALBUM_CREATE = 'album/ALBUM_CREATE';
  const ALBUM_UPDATE = 'album/ALBUM_UPDATE';
@@ -53,9 +54,24 @@
  
  //Thunks
 
+ export const createAlbum = (albumToAdd) => async (dispatch) => {
+    const response = await csrfFetch(
+        `/api/albums`,
+        {
+            method: `POST`,
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(albumToAdd)
+        });
+    if (response.ok) {
+        const addedAlbum = await response.json();
+        dispatch(albumCreate(addedAlbum));
+    }
+}
+
  //get all songs, reguardless of user
- export const getAllAlbums = () => async (dispatch) => {
-     const response = await fetch(`/api/albums`);
+ export const getAllAlbums = (limit = null) => async (dispatch) => {
+     console.log(limit)
+    const response = limit ? await fetch(`/api/albums?limit=${limit}`) : await fetch(`/api/albums`);
  
      if (response.ok) {
          const albums = await response.json();
@@ -103,6 +119,22 @@
             return {
                 ...state,
                 ...allUserAlbums
+            }
+        case ALBUM_CREATE:
+            console.log("Message in Reducer: ", action.newAlbum)
+            if (state && !state[action.newAlbum.id]){
+                const newState = {
+                    ...state,
+                    [action.newAlbum.id]: action.newAlbum
+                }
+                return newState
+            }
+            return {
+                ...state,
+                [action.newAlbum.id]: {
+                    ...state[action.newAlbum.id],
+                    ...action.newAlbum
+                }
             }
          default:
              return state;
