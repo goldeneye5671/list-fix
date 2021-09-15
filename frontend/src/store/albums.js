@@ -52,7 +52,7 @@
  })
  
  //Thunks
- 
+
  //get all songs, reguardless of user
  export const getAllAlbums = () => async (dispatch) => {
      const response = await fetch(`/api/albums`);

@@ -16,9 +16,14 @@ router.get('/songs', expressAsyncHandler( async (req, res) => {
 }));
 
 router.post('/songs', expressAsyncHandler( async (req, res) => {
+  console.log("Data recieved")
   const {
-
+    userId,
+    title,
+    songUrl,
+    selectedAlbumId
   } = req.body;
+  console.log(title);
 }))
 
 router.get('/songs/:songId', expressAsyncHandler( async (req, res) => {

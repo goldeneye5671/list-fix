@@ -37,7 +37,7 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route path="/songs/new">
-          { user ? <SongForm /> :<p>403: Forbidden</p>}
+          { user ? <SongForm isEditForm={false} /> :<p>403: Forbidden</p>}
           </Route>
           <Route path="/songs/:songId">
             <Song />

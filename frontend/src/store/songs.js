@@ -40,9 +40,9 @@ const songUpdate = (updatedSong) => ({
 });
 
 //create a singular song
-const songCreate = (newSong) => ({
+const songCreate = (message) => ({
     type: SONG_CREATE,
-    newSong,
+    message,
 })
 
 //delete a singular song
@@ -52,6 +52,22 @@ const songDelete = (deletedSong) => ({
 })
 
 //Thunks
+
+
+
+export const createSong = (songToAdd) => async (dispatch) => {
+    const response = await fetch(
+        `/api/songs`,
+        {
+            method: `POST`,
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(songToAdd)
+        });
+    if (response.ok) {
+        const message = await response.json();
+        dispatch(songCreate(songToAdd));
+    }
+}
 
 //get all songs, reguardless of user
 export const getAllSongs = () => async (dispatch) => {
@@ -94,10 +110,14 @@ const songReducer = (state = initialState, action) => {
                 ...allSongs
             }
         case SONG_GET_ONE:
-            console.log("Action executed");
             const oneSong = {...action.song}
             return {
                 ...oneSong
+            }
+        case SONG_CREATE:
+            const message = {...state, ...action.message}
+            return {
+                ...message
             }
         default:
             return state;
