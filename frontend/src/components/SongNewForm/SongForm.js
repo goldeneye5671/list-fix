@@ -5,30 +5,64 @@ import { getAlbumUser } from '../../store/albums';
 export default function SongForm() {
     //need to get the id and name of albums from the backend and present them in the form
     //need to get the user's id from the token to add a song to themselves
-    const userInfo = useSelector(state => state.session);
-    const userAlbums = useSelector(state => state.album)
+    const session = useSelector(state => state.session);
+    const userAlbums = useSelector(state => state.album);
     const dispatch = useDispatch();
     const [title, setTitle] = React.useState('');
     const [songUrl, setSongUrl] = React.useState('');
-    const [selectedAlbumId, setSelectedAlbumId] = React.useState(1)
-    
+    const [selectedAlbumId, setSelectedAlbumId] = React.useState(null);
+    const [errors, setErrors] = React.useState([]);
+
     React.useEffect( () => {
-        dispatch(getAlbumUser(userInfo.user.id));
-        console.log();
-    }, []);
+        dispatch(getAlbumUser(session.user.id));
+    }, [dispatch]);
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        const errors = [];
+        if (!title) {
+            errors.push("Please include a title");
+        }
+        if (!songUrl) {
+            errors.push("Please include a song url");
+        }
+        if (!selectedAlbumId){
+            errors.push("Please select an album")
+        }
+        if (errors.length > 0){
+            setErrors(errors)
+            return null;
+        }else {
+            const data = {
+                // userId,
+                title,
+                songUrl,
+                selectedAlbumId
+            }
+            console.log(data)
+        }
+    }
 
     return (
         <form>
+            <div className="errors-song">
+                {errors.length > 0 ? <h2>Errors</h2> : null}
+                {errors && errors.map(error => (
+                    <p>{error}</p>
+                ))}
+            </div>
             <label>Title of song</label>
             <input placeholder="ex. Love me do" required value={title} onChange={e => setTitle(e.target.value)}/>
             <label>Album of song</label>
             <select onChange={e => setSelectedAlbumId(e.target.value)}>
-                {userAlbums.albums.map( album => (
-                    <option key={album.id} value={album.id}>{album.name}</option>
+                <option value={null}>Select an album</option>
+                {userAlbums.albums?.map( album => (
+                    <option key={album.id} value={album.id}>{album.title}</option>
                 ))}
             </select>
             <label>Url of song</label>
-
+            <input placeholder="ex. www.song.com/song" required value={songUrl} onChange={e => setSongUrl(e.target.value)} />
+            <button onClick={submitHandler}>Make song</button>
         </form>
     )
 }

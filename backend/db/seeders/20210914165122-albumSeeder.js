@@ -15,7 +15,21 @@ module.exports = {
        imageUrl: null,
        createdAt: new Date(),
        updatedAt: new Date()
-     }
+     },
+     {
+      userId: 1,
+      title: "Abbey Road",
+      imageUrl: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userId: 1,
+      title: "September in the rain",
+      imageUrl: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
    ], {});
   },
 
