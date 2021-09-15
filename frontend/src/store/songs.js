@@ -5,6 +5,8 @@
  * delete songs
  */
 
+import { csrfFetch } from "./csrf";
+
 const SONG_CREATE = 'song/SONG_CREATE';
 const SONG_UPDATE = 'song/SONG_UPDATE';
 const SONG_GET = 'song/SONG_GET';
@@ -40,9 +42,9 @@ const songUpdate = (updatedSong) => ({
 });
 
 //create a singular song
-const songCreate = (newSong) => ({
+const songCreate = (message) => ({
     type: SONG_CREATE,
-    newSong,
+    message,
 })
 
 //delete a singular song
@@ -53,10 +55,26 @@ const songDelete = (deletedSong) => ({
 
 //Thunks
 
-//get all songs, reguardless of user
-export const getAllSongs = () => async (dispatch) => {
-    const response = await fetch(`/api/songs`);
 
+
+export const createSong = (songToAdd) => async (dispatch) => {
+    const response = await csrfFetch(
+        `/api/songs`,
+        {
+            method: `POST`,
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(songToAdd)
+        });
+    if (response.ok) {
+        const addedSong = await response.json();
+        dispatch(songCreate(addedSong));
+    }
+}
+
+//get all songs, reguardless of user
+export const getAllSongs = (limit = null) => async (dispatch) => {
+    const response = limit ? await fetch(`/api/songs?limit=${limit}`) : await fetch(`/api/songs`);
+    console.log("Songs: ", limit)
     if (response.ok) {
         const songs = await response.json();
         dispatch(songGetAll(songs));
@@ -64,7 +82,11 @@ export const getAllSongs = () => async (dispatch) => {
 }
 
 export const getAllSongsUser = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/`)
+    const response = await fetch(`/api/users/${userId}/songs`);
+    if (response.ok){
+        const songs = await response.json();
+        dispatch(songGetUser(songs));
+    }
 }
 
 export const getSongOne = (songId) => async (dispatch) => {
@@ -90,10 +112,25 @@ const songReducer = (state = initialState, action) => {
                 ...allSongs
             }
         case SONG_GET_ONE:
-            console.log("Action executed");
             const oneSong = {...action.song}
             return {
                 ...oneSong
+            }
+        case SONG_CREATE:
+            console.log("Message in Reducer: ", action.message)
+            if (!state[action.message.id]){
+                const newState = {
+                    ...state,
+                    [action.message.id]: action.message
+                }
+                return newState
+            }
+            return {
+                ...state,
+                [action.message.id]: {
+                    ...state[action.message.id],
+                    ...action.message
+                }
             }
         default:
             return state;

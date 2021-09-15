@@ -3,7 +3,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const asyncHandler = require('express-async-handler');
-const {User, Song, Album} = require('../../db/models')
+const {User, Song, Album, Playlist} = require('../../db/models')
 const {setTokenCookie} = require('../../utils/auth');
 
 const validateSignup = [
@@ -69,6 +69,17 @@ const validateSignup = [
       albums
     })
   }));
+
+  router.get('/:id/playlists', asyncHandler(async(req,res)=>{
+    const playlists = await Playlist.findAll({
+      where: {
+        userId: req.params.id
+      }
+    });
+    res.json({
+      playlists
+    })
+  }))
   router.put('/')
 
 module.exports = router;

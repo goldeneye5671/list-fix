@@ -8,28 +8,13 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkInsert('Albums', [
+   return queryInterface.bulkInsert('Playlists', [
      {
        userId: 1,
-       title: "Google boi",
-       imageUrl: null,
+       name: "Beatles time!",
        createdAt: new Date(),
        updatedAt: new Date()
-     },
-     {
-      userId: 1,
-      title: "Abbey Road",
-      imageUrl: null,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userId: 1,
-      title: "September in the rain",
-      imageUrl: null,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
+     }
    ], {});
   },
 
@@ -40,6 +25,6 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkDelete('Albums', null, {});
+   return queryInterface.bulkDelete('Playlists', null, {});
   }
 };
