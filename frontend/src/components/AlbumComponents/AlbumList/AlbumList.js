@@ -17,13 +17,24 @@ export default function AlbumList({location}) {
     return (
         <div>
             <h2>Albums</h2>
-          <ul>
-              {
-                  Object.values(albums).map(album => (
-                      <li key={album?.id}><Link to={`/albums/${album?.id}`}>{album?.title}</Link></li>
-                  ))
+            {
+                Object.values(albums).map(album => {
+                      return (
+                      <div className={"albums-container"} key={album?.id}>
+                          <div className={"image-name-album"} >
+                                <img src={"test"}></img>
+                                <Link to={`/albums/${album?.id}`}>
+                                    <ul>
+                                        <li>{album?.title}</li>
+                                        <li>{album?.User?.username}</li>
+                                    </ul>
+                                </Link>
+                          </div>
+                        </div>
+                  )
+                }
+              )
               }
-          </ul>  
         </div>
     )
 }

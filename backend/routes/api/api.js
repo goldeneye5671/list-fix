@@ -2,7 +2,7 @@ const router = require('express').Router();
 const expressAsyncHandler = require('express-async-handler');
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
-const {Song, Playlist, Comment, Album} = require('../../db/models');
+const {User, Song, Playlist, Comment, Album} = require('../../db/models');
 const { sequelize } = require('../../db/models');
 const { restoreUser } = require('../../utils/auth.js');
 const url = require("url")
@@ -13,10 +13,22 @@ router.use('/users', usersRouter);
 
 router.get('/songs', expressAsyncHandler( async (req, res) => {
   if (!req.query.limit) {
-    let allSongs = await Song.findAll();
+    let allSongs = await Song.findAll({
+      include: [
+        User,
+        Album
+      ],
+    });
     res.json(allSongs);
   }else{
-    let allSongsLimited = await Song.findAll({limit: parseInt(req.query.limit), order: sequelize.random()})
+    let allSongsLimited = await Song.findAll({
+      include: [
+        User,
+        Album
+      ],
+      limit: parseInt(req.query.limit),
+      order: sequelize.random(),
+    })
     res.json(allSongsLimited)
   }
 }));
@@ -52,10 +64,23 @@ router.delete('/songs/:songId')
 // router.get('/users')
 router.get('/playlists', expressAsyncHandler(async(req,res)=> {
   if (!req.query.limit){
-    const playlists = await Playlist.findAll();
+    const playlists = await Playlist.findAll({
+      include: [
+        Song,
+        User,
+      ]
+    });
     res.json(playlists);
   } else {
-    const playlistsLimited = await Playlist.findAll({limit: parseInt(req.query.limit), order: sequelize.random()})
+    const playlistsLimited = await Playlist.findAll(
+      {
+        limit: parseInt(req.query.limit),
+        order: sequelize.random(),
+        include: [
+          Song,
+          User
+        ]
+    })
     res.json(playlistsLimited);
   }
 }));
@@ -84,10 +109,16 @@ router.get('/songs/:songId/comments')
 
 router.get('/albums', expressAsyncHandler(async(req, res) => {
   if (!req.query.limit){
-    const albums = await Album.findAll();
+    const albums = await Album.findAll({include: [User, Song]});
     res.json(albums);
   }else {
-    const albumsLimited = await Album.findAll({limit: parseInt(req.query.limit), order: sequelize.random()})
+    const albumsLimited = await Album.findAll(
+      {
+        limit: parseInt(req.query.limit),
+        order: sequelize.random(),
+        include: [User, Song]
+      }
+      )
     res.json(albumsLimited)
   }
 }));

@@ -6,7 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Playlist.associate = function(models) {
     Playlist.belongsTo(models.User, {foreignKey: 'userId'});
-    Playlist.hasMany(models.PlaylistConnection, {foreignKey: 'playlistId'});
+    Playlist.belongsToMany(models.Song, {
+      through: "PlaylistConnection",
+      otherKey: 'playlistId',
+      foreignKey: 'songId'
+    });
     Playlist.hasMany(models.PlaylistLike, {foreignKey: 'playlistId'});
     // associations can be defined here
   };

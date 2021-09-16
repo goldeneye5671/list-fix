@@ -18,13 +18,20 @@ export default function PlaylistList({location}) {
     return (
         <div>
             <h1>Playlists</h1>
-          <ul>
-              {
+            <div className={"playlist-container"}>
+                {
                   Object.values(playlists).map(playlist => (
-                      <li key={playlist.id}><Link to={`/playlists/${playlist.id}`}>{playlist.name}</Link></li>
+                        <div key={playlist?.id}>
+                            <Link to={`/playlists/${playlist?.id}`}>
+                                <ul>
+                                    <li>{playlist?.name}</li>
+                                    <li>{playlist?.User?.username}</li>
+                                </ul>
+                            </Link>
+                        </div>
                   ))
-              }
-          </ul>  
+                }
+            </div>
         </div>
     )
 }

@@ -1,42 +1,63 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import { getSongOne } from '../../../store/songs';
 
-export default function Song() {
-    const {songId} = useParams();
+export default function Song ({songInformation}) {
     const dispatch = useDispatch();
     const song = useSelector(state => state.song);
-    console.log("Song: ", song)
-    React.useEffect(() => {
-        dispatch(getSongOne(songId))
-    }, []);
+    const {songId} = useParams();
 
-    return (
-        <div>
-            {song.title}
-        </div>
-    )
+    React.useEffect(() => {
+        if (!songInformation) {
+            dispatch(getSongOne(songId))
+        }
+    }, []);
+    
+    let retVal;
+
+    if (songInformation){
+        retVal =  (
+            <div className={"songs-container"} key={songInformation.id}>
+                <div className={"image-name-song"}>
+                    <Link to={`/songs/${songInformation.id}`}>
+                        <img src={"test"}></img>
+                            <ul>
+                                <li>{songInformation?.title}</li>
+                                <li>{songInformation?.Album?.title}</li>
+                                <li>{songInformation?.User?.username}</li>
+                            </ul>
+                    </Link>
+                    <button>
+                        Play
+                    </button>
+                </div>
+            </div>
+    
+        )
+    } else {
+        retVal = (
+            <div className={"songs-container"} key={song.id}>
+                <div className={"image-name-song"}>
+                    <Link to={`/songs/${song.id}`}>
+                        <img src={"test"}></img>
+                            <ul>
+                                <li>{song?.title}</li>
+                                <li>{song?.Album?.title}</li>
+                                <li>{song?.User?.username}</li>
+                            </ul>
+                    </Link>
+                    <button>
+                        Play
+                    </button>
+                </div>
+            </div>
+    
+        )
+    }
+
+    return retVal;
+        
 }
 
-
-// export default function SongList() {
-//     const dispatch = useDispatch();
-//     const songs = useSelector(state => state.song);
-//     console.log('songs', songs);
-//     React.useEffect(() => {
-//         dispatch(getAllSongs())
-//     }, []);
-
-//     return (
-//         <div>
-//             <ul>
-//                 {
-//                     Object.values(songs).map(
-//                         (song) => <li key={songs.id}>{song.title}</li>
-//                     )
-//                 }
-//             </ul>
-//         </div>
-//     )
-// }

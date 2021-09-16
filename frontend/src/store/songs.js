@@ -74,7 +74,6 @@ export const createSong = (songToAdd) => async (dispatch) => {
 //get all songs, reguardless of user
 export const getAllSongs = (limit = null) => async (dispatch) => {
     const response = limit ? await fetch(`/api/songs?limit=${limit}`) : await fetch(`/api/songs`);
-    console.log("Songs: ", limit)
     if (response.ok) {
         const songs = await response.json();
         dispatch(songGetAll(songs));
