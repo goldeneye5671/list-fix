@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllPlaylists, getSomePlayLists } from '../../../store/playlist';
 import { Link } from 'react-router-dom';
+import Playlist from '../Playlist/Playlist';
 
 export default function PlaylistList({location}) {
     const dispatch = useDispatch();
@@ -21,14 +22,7 @@ export default function PlaylistList({location}) {
             <div className={"playlist-container"}>
                 {
                   Object.values(playlists).map(playlist => (
-                        <div key={playlist?.id}>
-                            <Link to={`/playlists/${playlist?.id}`}>
-                                <ul>
-                                    <li>{playlist?.name}</li>
-                                    <li>{playlist?.User?.username}</li>
-                                </ul>
-                            </Link>
-                        </div>
+                    <Playlist playlistInformation={playlist}/>
                   ))
                 }
             </div>

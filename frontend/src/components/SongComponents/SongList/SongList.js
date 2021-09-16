@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllSongs } from '../../../store/songs';
 import { Link } from 'react-router-dom';
-import { Song } from '../Song/Song'
+import  Song  from '../Song/Song'
 
 export default function SongList({location}) {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export default function SongList({location}) {
             <h1>Songs</h1>
                 {
                   Object.values(songs).map(
-                    (song) => {<Song songInformation={song} />}
+                    (song) => { return <Song songInformation={song} />}
                 )  
                 }
         </div>
