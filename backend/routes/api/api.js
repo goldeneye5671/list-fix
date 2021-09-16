@@ -16,7 +16,7 @@ router.get('/songs', expressAsyncHandler( async (req, res) => {
     let allSongs = await Song.findAll({
       include: [
         User,
-        Album
+        Album,
       ],
     });
     res.json(allSongs);
@@ -24,7 +24,7 @@ router.get('/songs', expressAsyncHandler( async (req, res) => {
     let allSongsLimited = await Song.findAll({
       include: [
         User,
-        Album
+        Album,
       ],
       limit: parseInt(req.query.limit),
       order: sequelize.random(),
@@ -55,7 +55,8 @@ router.post('/songs', expressAsyncHandler( async (req, res) => {
 }))
 
 router.get('/songs/:songId', expressAsyncHandler( async (req, res) => {
-  const song = await Song.findByPk(req.params.songId);
+  const song = await Song.findByPk(req.params.songId,
+    {include: [Album, User]});
   res.json(song);
 }));
 
@@ -87,7 +88,7 @@ router.get('/playlists', expressAsyncHandler(async(req,res)=> {
 
 
 router.get('/playlists/:playlistId', expressAsyncHandler(async (req, res) => {
-  const playlist = await Playlist.findByPk(req.params.playlistId);
+  const playlist = await Playlist.findByPk(req.params.playlistId, {include: [User, Song]});
   res.json(playlist)
 }));
 
@@ -124,7 +125,7 @@ router.get('/albums', expressAsyncHandler(async(req, res) => {
 }));
 
 router.get('/albums/:id', expressAsyncHandler(async(req, res) => {
-  const album = await Album.findByPk(req.params.id);
+  const album = await Album.findByPk(req.params.id, {include: [User, Song]});
   res.json(album);
 }));
 

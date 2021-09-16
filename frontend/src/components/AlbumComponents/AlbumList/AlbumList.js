@@ -16,10 +16,10 @@ export default function AlbumList({location}) {
     }, [location])
 
     return (
-        <div>
+        <div className={"album-container"}>
             <h2>Albums</h2>
             {
-                Object.values(albums).map(album => {
+                Object.values(albums)?.map(album => {
                     return <Album albumInformation={album}/>
                 }
               )

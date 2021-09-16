@@ -5,6 +5,10 @@ import {useParams} from 'react-router-dom';
 import { getSongOne } from '../../../store/songs';
 
 export default function Song ({songInformation}) {
+
+    let user = useSelector(state => state.session);
+    let userInfo = user.user ? {loggedIn: true, id: user.user.id} : {loggedIn: false, id: NaN};
+
     const dispatch = useDispatch();
     const song = useSelector(state => state.song);
     const {songId} = useParams();
@@ -22,11 +26,8 @@ export default function Song ({songInformation}) {
             <div className={"songs-container"} key={songInformation.id}>
                 <div className={"image-name-song"}>
                     <Link to={`/songs/${songInformation.id}`}>
-                        <img src={"test"}></img>
                             <ul>
                                 <li>{songInformation?.title}</li>
-                                <li>{songInformation?.Album?.title}</li>
-                                <li>{songInformation?.User?.username}</li>
                             </ul>
                     </Link>
                     <button>
@@ -39,18 +40,12 @@ export default function Song ({songInformation}) {
     } else {
         retVal = (
             <div className={"songs-container"} key={song.id}>
-                <div className={"image-name-song"}>
-                    <Link to={`/songs/${song.id}`}>
-                        <img src={"test"}></img>
-                            <ul>
-                                <li>{song?.title}</li>
-                                <li>{song?.Album?.title}</li>
-                                <li>{song?.User?.username}</li>
-                            </ul>
-                    </Link>
-                    <button>
-                        Play
-                    </button>
+                <div className={"song-info"}>
+                    <p>{song?.title}</p>
+                    <p>{song?.Album?.title}</p>
+                    <p>by {song?.User?.username}</p>
+                    <button>Play</button>
+                    { userInfo.loggedIn && userInfo.id === song?.User?.id ? <><button>Edit</button><button>Delete</button></> : null }
                 </div>
             </div>
     
@@ -60,4 +55,3 @@ export default function Song ({songInformation}) {
     return retVal;
         
 }
-

@@ -29,7 +29,7 @@ export default function Playlist({playlistInformation}) {
             </Link>
             <div>
                 {
-                   playlistInformation.Songs.length === 0 ? <p>No Songs</p> : playlistInformation.Songs.map( song => (
+                   playlistInformation.Songs?.length === 0 ? <p>No Songs</p> : playlistInformation.Songs?.map( song => (
                        <p>{song.title} by {song.user}</p>
                    )
                    )
