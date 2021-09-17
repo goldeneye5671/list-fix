@@ -7,10 +7,12 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
 import SongList from "./components/SongComponents/SongList/SongList";
-import Song from "./components/SongComponents/Song/SongBasic"
+import SongBasic from "./components/SongComponents/Song/SongBasic"
+import SongComplex from "./components/SongComponents/Song/SongComplex"
 import SongForm from "./components/SongComponents/SongNewForm/SongForm";
 
-import Album from "./components/AlbumComponents/Album/AlbumBasic";
+import AlbumBasic from "./components/AlbumComponents/Album/AlbumBasic";
+import AlbumComplex from "./components/AlbumComponents/Album/AlbumComplex"
 import AlbumList from "./components/AlbumComponents/AlbumList/AlbumList";
 import AlbumForm from "./components/AlbumComponents/AlbumForm/AlbumForm";
 
@@ -41,7 +43,7 @@ function App() {
           { user ? <AlbumForm /> :<p>403: Forbidden</p>}
           </Route>
           <Route path='/albums/:albumId'>
-            <Album />
+            <AlbumComplex />
           </Route>
           <Route path='/albums'>
             <AlbumList location={"Home"}/>
@@ -65,7 +67,7 @@ function App() {
           { user ? <SongForm isEditForm={false} /> :<p>403: Forbidden</p>}
           </Route>
           <Route path="/songs/:songId">
-            <Song />
+            <SongComplex />
           </Route>
           <Route path="/songs">
             <SongList />

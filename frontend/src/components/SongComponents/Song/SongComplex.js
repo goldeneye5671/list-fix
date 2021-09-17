@@ -24,13 +24,13 @@ export default function SongComplex ({songInformation, location}) {
     if (songInformation){
         retVal =  (
             <div className={`song-container`} key={songInformation.id}>
-                <div className={`image-container`}>
+                <div className={`song-image-container`}>
                     {/* IMG HERE */}
                 </div>
                 <div className={`song-info`}>
                     <Link to={`/songs/${songInformation.id}`}>
-                        <p>{songInformation?.title}</p>
-                        <p>{songInformation?.User.name}</p>
+                        <h2>{songInformation?.title}</h2>
+                        <h3>{songInformation?.User?.name}</h3>
                     </Link>
                 </div>
                 <div>

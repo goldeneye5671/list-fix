@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAlbumOne } from '../../../store/albums'
 import {useParams} from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import Song from '../../SongComponents/Song/SongBasic'
+import SongComplex from '../../SongComponents/Song/SongComplex'
 
 export default function AlbumComplex({albumInformation}) {
     const {albumId} = useParams();
@@ -32,7 +32,7 @@ export default function AlbumComplex({albumInformation}) {
                 </div>
                 <div className={"songs"}>
                     {
-                        (albumInformation.Songs?.length === 0)  ? <p>No songs</p> : albumInformation.Songs?.map(song => <Song songInformation={song} />)
+                        (albumInformation.Songs?.length === 0)  ? <p>No songs</p> : albumInformation.Songs?.map(song => <SongComplex songInformation={song} />)
                     }
                 </div>
             </div>
@@ -60,7 +60,7 @@ export default function AlbumComplex({albumInformation}) {
               </div>
               <div className={"songs-album-page"}>
                     {
-                        album?.Songs?.map(song => <Song key={song.id} songInformation={song} />)
+                        album?.Songs?.map(song => <SongComplex key={song.id} songInformation={song} />)
                     }
                 </div>
             </>

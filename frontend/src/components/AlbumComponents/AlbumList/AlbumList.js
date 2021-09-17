@@ -20,7 +20,7 @@ export default function AlbumList({location, isBasic}) {
         return (
             <>
             <h2>Albums</h2>
-            <div className={"album-container-basic"}>
+            <div className={"albums-container-basic"}>
                 {Object.values(albums)?.map(album => <Link to={`/albums/${album?.id}`}><AlbumBasic albumInformation={album}/></Link>)}
             </div>
             </>

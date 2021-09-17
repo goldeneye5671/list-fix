@@ -34,19 +34,26 @@
 }
 
 .song-container {
-    border: solid black 3px;
+    /* border: solid black 3px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
     margin: 5px 25px;
-    padding: 0px 10px;
+    padding: 0px 10px; */
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-around;
+    border: solid black 3px;
 }
+
 
 .songs-container {
     display:flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
+    justify-self:center;
 }
 
 .song-info{
@@ -70,23 +77,25 @@
 } */
 
 
-.songs-container-basic, .albums-container-basic{
+.songs-container-basic, .albums-container-basic, .playlists-basic-container{
     margin: 5% auto;
-    border: solid black 3px;
+    /* border: solid black 3px; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    padding: 50px;
     display:flex;
     width: 80%;
     overflow: scroll;
     gap: 33px;
 }
 
-.song-container-basic, .album-container-basic{
-    margin: 5% auto;
+.song-container-basic, .album-container-basic, .playlist-container-basic{
+    /* margin: 5% auto; */
     display:flex;
     flex-direction: column;
     width: 33%;
 }
 
-.song-image-basic, .album-image-basic{
+.song-image-basic, .album-image-basic, .playlist-image-basic{
     border: black solid 3px;
     width: 256px;
     height: 256px;

@@ -20,32 +20,33 @@ export default function PlaylistBasic({playlistInformation}) {
     
     if (playlistInformation) {
         retVal = (
-        <div className={"playlist-basic-container"} key={playlistInformation?.id}>
+        <div className={"playlist-container-basic"} key={playlistInformation?.id}>
+            <img className={'playlist-image-basic'} src={"test"}></img>
             <Link to={`/playlists/${playlistInformation?.id}`}>
                 <h2>{playlistInformation?.name}</h2>
                 <h3>{playlistInformation?.User?.username}</h3>
             </Link>
             <div>
                 {
-                   playlistInformation.Songs?.length === 0 ? <p>No Songs</p> : playlistInformation.Songs?.map( song => (
-                       <p>{song.title} by {song.user}</p>
-                   )
-                   )
+                   playlistInformation.Songs?.length === 0 ? <p>No Songs</p> : <p>{playlistInformation.Songs?.length}</p>
                 }
             </div>
         </div>
         )
     } else {
         retVal = (
-            <div key={playlist?.id}>
-            <Link to={`/playlists/${playlist?.id}`}>
-                <ul>
-                    <li>{playlist?.name}</li>
-                    <li>{playlist?.User?.username}</li>
-                </ul>
-            </Link>
-            
-        </div>
+            <div className={"playlist-container-basic"}key={playlist?.id}>
+                <img src={"test"}></img>
+                <Link to={`/playlists/${playlist?.id}`}>
+                    <h2>{playlist?.name}</h2>
+                    <h3>{playlist?.User?.username}</h3>
+                </Link>
+                <div>
+                {
+                    <p>{playlist?.Songs?.length}</p>
+                }
+            </div>
+            </div>
         )
     }
     

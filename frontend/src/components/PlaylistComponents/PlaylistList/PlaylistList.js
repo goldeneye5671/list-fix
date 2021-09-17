@@ -21,7 +21,7 @@ export default function PlaylistList({location, isBasic}) {
         return (
             <div>
                 <h1>Playlists</h1>
-                <div className={"playlists-container"}>
+                <div className={"playlists-basic-container"}>
                     {
                       Object.values(playlists).map(playlist => (
                         <PlaylistBasic playlistInformation={playlist}/>
@@ -34,7 +34,7 @@ export default function PlaylistList({location, isBasic}) {
         return (
             <div>
                 <h1>Playlists</h1>
-                <div className={"playlist-container"}>
+                <div className={"playlists-container"}>
                     {
                       Object.values(playlists).map(playlist => (
                         <PlaylistComplex playlistInformation={playlist}/>
