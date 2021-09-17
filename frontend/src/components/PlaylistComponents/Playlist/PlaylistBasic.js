@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import {useParams} from 'react-router-dom';
 import { getPlaylistOne } from '../../../store/playlist';
 import { Link } from 'react-router-dom';
-import Song from '../../SongComponents/Song/Song';
+import Song from '../../SongComponents/Song/SongBasic';
 
-export default function Playlist({playlistInformation}) {
+export default function PlaylistBasic({playlistInformation}) {
     const {playlistId} = useParams();
     const dispatch = useDispatch();
     const playlist = useSelector(state => state.playlist);
@@ -20,12 +20,10 @@ export default function Playlist({playlistInformation}) {
     
     if (playlistInformation) {
         retVal = (
-        <div key={playlistInformation?.id}>
+        <div className={"playlist-basic-container"} key={playlistInformation?.id}>
             <Link to={`/playlists/${playlistInformation?.id}`}>
-                <ul>
-                    <li>{playlistInformation?.name}</li>
-                    <li>{playlistInformation?.User?.username}</li>
-                </ul>
+                <h2>{playlistInformation?.name}</h2>
+                <h3>{playlistInformation?.User?.username}</h3>
             </Link>
             <div>
                 {

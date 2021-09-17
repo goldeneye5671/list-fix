@@ -7,14 +7,14 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
 import SongList from "./components/SongComponents/SongList/SongList";
-import Song from "./components/SongComponents/Song/Song"
+import Song from "./components/SongComponents/Song/SongBasic"
 import SongForm from "./components/SongComponents/SongNewForm/SongForm";
 
-import Album from "./components/AlbumComponents/Album/Album";
+import Album from "./components/AlbumComponents/Album/AlbumBasic";
 import AlbumList from "./components/AlbumComponents/AlbumList/AlbumList";
 import AlbumForm from "./components/AlbumComponents/AlbumForm/AlbumForm";
 
-import Playlist from "./components/PlaylistComponents/Playlist/Playlist"
+import Playlist from "./components/PlaylistComponents/Playlist/PlaylistBasic"
 import PlaylistList from './components/PlaylistComponents/PlaylistList/PlaylistList'
 import PlaylistForm from "./components/PlaylistComponents/PlaylistForm/PlaylistForm";
 
@@ -71,9 +71,9 @@ function App() {
             <SongList />
           </Route>
           <Route path="/" exact>
-            <PlaylistList location={"Home"} />
-            <SongList location={"Home"} />
-            <AlbumList location={"Home"} />
+            <PlaylistList location={"Home"} isBasic={true} />
+            <SongList location={"Home"} isBasic={true}/>
+            <AlbumList location={"Home"} isBasic={true}/>
           </Route>
         </Switch>
       )}

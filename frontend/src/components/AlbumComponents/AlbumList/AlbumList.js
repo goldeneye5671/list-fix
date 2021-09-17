@@ -2,28 +2,37 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllAlbums } from '../../../store/albums';
 import { Link } from 'react-router-dom';
-import Album from '../Album/Album';
+import AlbumBasic from '../Album/AlbumBasic';
+import AlbumComplex from '../Album/AlbumComplex'
 
-export default function AlbumList({location}) {
+export default function AlbumList({location, isBasic}) {
     const dispatch = useDispatch();
     const albums = useSelector(state => state.album);
     React.useEffect(() => {
         if (location === "Home"){
-            dispatch(getAllAlbums(2));
+            dispatch(getAllAlbums(10));
         } else{
             dispatch(getAllAlbums());
         }
-    }, [location])
+    }, [location, isBasic])
 
-    return (
-        <div className={"album-container"}>
+    if (isBasic){
+        return (
+            <>
             <h2>Albums</h2>
-            {
-                Object.values(albums)?.map(album => {
-                    return <Album albumInformation={album}/>
-                }
-              )
-              }
-        </div>
-    )
+            <div className={"album-container-basic"}>
+                {Object.values(albums)?.map(album => <Link to={`/albums/${album?.id}`}><AlbumBasic albumInformation={album}/></Link>)}
+            </div>
+            </>
+        )
+    }else {
+        return (
+            <>
+            <h2>Albums</h2>
+            <div className={"albums-container-complex"}>
+                {Object.values(albums)?.map(album => <Link to={`/albums/${album?.id}`}><AlbumComplex albumInformation={album}/></Link>)}
+            </div>
+            </>
+        )
+    }
 }
