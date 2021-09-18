@@ -19,6 +19,7 @@ export default function SongForm({song, isEditForm, update, setUpdate}) {
         if (update) {
             setTitle(song?.title)
             setSongUrl(song?.songUrl);
+            console.log("Song",song)
         }
     }, [dispatch]);
 

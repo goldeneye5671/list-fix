@@ -15,24 +15,30 @@ export default function SongComplex ({songIdProp, location}) {
 
     const [update, setUpdate] = React.useState(false);
 
+    // if (songId) {
+    //     dispatch(getSongOne(songId))
+    // } else {
+    //     dispatch(getSongOne(songIdProp))
+    // }
+
     React.useEffect(() => {
-        console.log(songIdProp)
         if (songId) {
             dispatch(getSongOne(songId))
         } else {
             dispatch(getSongOne(songIdProp))
         }
-    }, [dispatch]);
+    }, []);
     
     return (
         <div className={`songs-container`} key={song.id}>
         <div className={"song-info"}>
-            <p>{song?.title}</p>
-            <p>{song?.Album?.title}</p>
-            <p>by {song?.User?.username}</p>
+            <p>{song[songIdProp]?.title}</p>
+            {console.log(song[songIdProp]?.Album?.title)}
+            <p>{song[songIdProp]?.Album?.title}</p>
+            <p>by {song[songIdProp]?.User?.username}</p>
             <button>Play</button>
             {
-                (userInfo.loggedIn && userInfo?.id === song?.userId) ? 
+                (userInfo?.loggedIn && userInfo?.id === song[songIdProp]?.userId) ? 
                     (!update) ? 
                         <>
                             <button onClick={e => setUpdate(!update)}>Edit</button>
@@ -40,7 +46,7 @@ export default function SongComplex ({songIdProp, location}) {
                         </>
                             :
                         <>
-                            <SongForm song={song} update={update} setUpdate={setUpdate}/>
+                            <SongForm song={song[songIdProp]} update={update} setUpdate={setUpdate}/>
                             <button onClick={e => setUpdate(!update)}>cancel</button>
                         </>
                         :

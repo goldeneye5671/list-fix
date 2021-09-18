@@ -109,8 +109,6 @@ export const updateSong = (songToUpdate) => async (dispatch) => {
     if (response.ok) {
         const updatedSong = await response.json();
         dispatch(songUpdate(updatedSong));
-    }else{
-        console.log(songToUpdate);
     }
 }
 
@@ -129,9 +127,9 @@ const songReducer = (state = initialState, action) => {
                 ...allSongs
             }
         case SONG_GET_ONE:
-            const oneSong = {...action.song}
             return {
-                ...oneSong
+                ...state,
+                [action.song.id]: action.song
             }
         case SONG_CREATE:
             if (!state[action.message.id]){
