@@ -60,7 +60,30 @@ router.get('/songs/:songId', expressAsyncHandler( async (req, res) => {
   res.json(song);
 }));
 
-router.put('/songs/:songId')
+router.put('/songs/:songId', expressAsyncHandler(async (req, res) => {
+  console.log("Hello there!!")
+  const {
+    userId,
+    selectedAlbumId,
+    songId,
+    title,
+    songUrl
+  } = req.body
+
+  const song = await Song.findByPk(req.params.songId);
+  if (song){
+    song.update(
+      {
+        userId,
+        selectedAlbumId,
+        title,
+        songUrl
+      })
+      res.json(song);
+  } else {
+    throw new Error ("Song not found")
+  }
+}))
 router.delete('/songs/:songId')
 // router.get('/users')
 router.get('/playlists', expressAsyncHandler(async(req,res)=> {

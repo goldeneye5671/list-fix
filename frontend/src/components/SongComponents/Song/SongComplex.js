@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import { getSongOne } from '../../../store/songs';
+import SongForm from '../SongNewForm/SongForm'
 
 export default function SongComplex ({songInformation, location}) {
 
@@ -11,7 +12,8 @@ export default function SongComplex ({songInformation, location}) {
     const dispatch = useDispatch();
     const song = useSelector(state => state.song);
     const {songId} = useParams();
-   
+
+    const [update, setUpdate] = React.useState(false);
 
     React.useEffect(() => {
         if (!songInformation) {
@@ -35,20 +37,42 @@ export default function SongComplex ({songInformation, location}) {
                 </div>
                 <div>
                     <button>Play</button>
-                    { (userInfo.loggedIn && userInfo?.id === songInformation?.userId) ? <><button>Edit</button><button>Delete</button></> : null }
+                    {
+                        (userInfo.loggedIn && userInfo?.id === songInformation?.userId) ? 
+                            (!update) ? 
+                                <>
+                                    <button onClick={e => setUpdate(!update)}>Edit</button>
+                                    <button>Delete</button>
+                                </>
+                                :
+                                    <>
+                                        <SongForm song={songInformation} update={update} setUpdate={setUpdate}/>
+                                        <button onClick={e => setUpdate(!update)}>cancel</button>
+                                    </>
+                            :
+                            null         
+                    }
                 </div>
             </div>
     
         )
     } else {
         retVal = (
-            <div className={`songs-container-fancy`} key={song.id}>
+            <div className={`songs-container`} key={song.id}>
                 <div className={"song-info"}>
                     <p>{song?.title}</p>
                     <p>{song?.Album?.title}</p>
                     <p>by {song?.User?.username}</p>
                     <button>Play</button>
-                    { (userInfo.loggedIn && userInfo.id === song?.userId) ? <><button>Edit</button><button>Delete</button></> : null }
+                    { (userInfo.loggedIn && userInfo.id === song?.userId) ?
+                         (!update) ? 
+                         <>
+                            <button onClick={e => setUpdate(!update)}>Edit</button>
+                            <button>Delete</button></>
+                            :
+                        <SongForm />
+                        :
+                        null }
                 </div>
             </div>
     

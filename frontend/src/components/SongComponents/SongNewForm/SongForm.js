@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAlbumUser } from '../../../store/albums';
-import { createSong } from '../../../store/songs';
+import { createSong, updateSong } from '../../../store/songs';
 
-export default function SongForm({isEditForm}) {
+export default function SongForm({song, isEditForm, update, setUpdate}) {
     //need to get the id and name of albums from the backend and present them in the form
     //need to get the user's id from the token to add a song to themselves
     const session = useSelector(state => state.session);
@@ -16,6 +16,10 @@ export default function SongForm({isEditForm}) {
 
     React.useEffect( () => {
         dispatch(getAlbumUser(session.user.id));
+        if (update) {
+            setTitle(song?.title)
+            setSongUrl(song?.songUrl);
+        }
     }, [dispatch]);
 
     const submitHandler = async (e) => {
@@ -41,8 +45,14 @@ export default function SongForm({isEditForm}) {
                 selectedAlbumId,
             }
             data['userId'] = session.user.id;
-            let message = await dispatch(createSong(data));
-            console.log("Message: ", message)
+            data['songId'] = song.id;
+            console.log(data)
+            if (update) {
+                setUpdate(!update);
+                await dispatch(updateSong(data))
+            } else {
+                await dispatch(createSong(data));
+            }
         }
     }
 

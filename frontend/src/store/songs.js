@@ -96,6 +96,24 @@ export const getSongOne = (songId) => async (dispatch) => {
     }
 }
 
+
+export const updateSong = (songToUpdate) => async (dispatch) => {
+    const response = await csrfFetch(
+        `/api/songs/${songToUpdate.songId}`,
+        {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(songToUpdate)
+        }
+    );
+    if (response.ok) {
+        const updatedSong = await response.json();
+        dispatch(songUpdate(updatedSong));
+    }else{
+        console.log(songToUpdate);
+    }
+}
+
 const initialState = {
 
 }
@@ -116,7 +134,6 @@ const songReducer = (state = initialState, action) => {
                 ...oneSong
             }
         case SONG_CREATE:
-            console.log("Message in Reducer: ", action.message)
             if (!state[action.message.id]){
                 const newState = {
                     ...state,
@@ -131,6 +148,10 @@ const songReducer = (state = initialState, action) => {
                     ...action.message
                 }
             }
+        case SONG_UPDATE:
+            const updatedSongState = {...state};
+            updatedSongState[action.updatedSong.id] = action.updatedSong;
+            return updatedSongState;
         default:
             return state;
     }
