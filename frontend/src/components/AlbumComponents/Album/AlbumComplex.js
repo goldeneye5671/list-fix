@@ -60,7 +60,7 @@ export default function AlbumComplex({albumInformation}) {
               </div>
               <div className={"songs-album-page"}>
                     {
-                        album?.Songs?.map(song => <SongComplex key={song.id} songInformation={song} />)
+                        album?.Songs?.map(song => <SongComplex key={song.id} songIdProp={song.id} />)
                     }
                 </div>
             </>
