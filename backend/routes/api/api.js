@@ -61,7 +61,6 @@ router.get('/songs/:songId', expressAsyncHandler( async (req, res) => {
 }));
 
 router.put('/songs/:songId', expressAsyncHandler(async (req, res) => {
-  console.log("Hello there!!")
   const {
     userId,
     selectedAlbumId,
@@ -70,7 +69,7 @@ router.put('/songs/:songId', expressAsyncHandler(async (req, res) => {
     songUrl
   } = req.body
 
-  const song = await Song.findByPk(req.params.songId);
+  const song = await Song.findByPk(req.params.songId, {include: [Album, User]});
   if (song){
     song.update(
       {
