@@ -6,3 +6,5 @@ const { sequelize } = require("../../db/models");
 
 router.get('/comments/:commentId')
 router.get('/songs/:songId/comments')
+
+module.exports = router;

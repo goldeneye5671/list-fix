@@ -7,108 +7,99 @@
 
 import { csrfFetch } from "./csrf";
 
-const SONG_CREATE = 'song/SONG_CREATE';
-const SONG_UPDATE = 'song/SONG_UPDATE';
-const SONG_GET = 'song/SONG_GET';
-const SONG_GET_ONE = 'song/SONG_GET_ONE';
-const SONG_GET_USER = 'song/SONG_GET_USER';
-const SONG_DELETE = 'song/SONG_DELETE';
+const LOAD_SONGS = 'song/GET_SONG';
+const ADD_SONG = 'song/ADD_SONG';
+const UPDATE_SONG = 'song/UPDATE_SONG';
+const DELETE_SONG = 'song/DELETE_SONG';
 
 
-//Actions that can be dispatched
+// //Actions that can be dispatched
 
-//get all songs, no matter the user
-const songGetAll = (songs) => ({
-    type: SONG_GET,
-    songs,
-});
+const loadSongsAction = (receivedSongs) => (
+    {
+        type: LOAD_SONGS,
+        receivedSongs
+    }
+)
 
-//get all songs that belong to user
-const songGetUser = (songs) => ({
-    type: SONG_GET_USER,
-    songs
-});
+const addSongAction = (receivedSong) => (
+    {
+        type: ADD_SONG,
+        receivedSong
+    }
+)
 
-//get a singular song
-const songGetOne = (song) => ({
-    type: SONG_GET_ONE,
-    song,
-});
+const updateSongAction = (receivedSong) => (
+    {
+        type: UPDATE_SONG,
+        receivedSong
+    }
+)
 
-//update a singular song
-const songUpdate = (updatedSong) => ({
-    type: SONG_UPDATE,
-    updatedSong,
-});
+const deleteSongAction = (receivedSong) => (
+    {
+        type: DELETE_SONG,
+        receivedSong
+    }
+)
 
-//create a singular song
-const songCreate = (message) => ({
-    type: SONG_CREATE,
-    message,
-})
+// //Thunks
 
-//delete a singular song
-const songDelete = (deletedSong) => ({
-    type: SONG_DELETE,
-    deletedSong,
-})
-
-//Thunks
-
-
-
-export const createSong = (songToAdd) => async (dispatch) => {
+export const addSong = (receivedSong) => async (dispatch) => {
     const response = await csrfFetch(
         `/api/songs`,
         {
             method: `POST`,
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(songToAdd)
-        });
+            body: JSON.stringify(receivedSong)
+        }
+    );
+
     if (response.ok) {
-        const addedSong = await response.json();
-        dispatch(songCreate(addedSong));
-    }
-}
-
-//get all songs, reguardless of user
-export const getAllSongs = (limit = null) => async (dispatch) => {
-    const response = limit ? await fetch(`/api/songs?limit=${limit}`) : await fetch(`/api/songs`);
-    if (response.ok) {
-        const songs = await response.json();
-        dispatch(songGetAll(songs));
-    }
-}
-
-export const getAllSongsUser = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/users/${userId}/songs`);
-    if (response.ok){
-        const songs = await response.json();
-        dispatch(songGetUser(songs));
-    }
-}
-
-export const getSongOne = (songId) => async (dispatch) => {
-    const response = await fetch(`/api/songs/${songId}`);
-    if (response.ok){
         const song = await response.json();
-        dispatch(songGetOne(song));
+        return dispatch(addSongAction(song));
+    } else {
+        throw new Error("Returned a response that was not ok");
     }
 }
 
+export const loadSongs = () => async (dispatch) => {
+    const response = await fetch( `/api/songs` );
+    if (response.ok){
+        const songs = await response.json();
+        return dispatch(loadSongsAction(songs));
+    } else {
+        throw new Error("Returned a response that was not ok");
+    }
+}
 
-export const updateSong = (songToUpdate) => async (dispatch) => {
+export const updateSong = (receivedSong) => async (dispatch) => {
     const response = await csrfFetch(
-        `/api/songs/${songToUpdate.songId}`,
+        `/api/songs/${receivedSong.songId}`,
         {
             method: "PUT",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(songToUpdate)
+            body: JSON.stringify(receivedSong)
         }
     );
     if (response.ok) {
-        const updatedSong = await response.json();
-        dispatch(songUpdate(updatedSong));
+        const song = await response.json();
+        dispatch(updateSongAction(song));
+    }
+}
+
+export const deleteSong = (recievedSongId) => async (dispatch) => {
+    const response = await csrfFetch(
+        `/api/songs/${recievedSongId}`,
+        {
+            method: "DELETE",
+            headers: {'Content-Type': 'application/json'},
+        }
+    )
+
+    if (response.ok){
+        const song = await response.json();
+        dispatch(deleteSongAction(song))
     }
 }
 
@@ -117,43 +108,29 @@ const initialState = {
 }
 
 const songReducer = (state = initialState, action) => {
-    switch(action.type){
-        case SONG_GET: 
-            const allSongs = {}
-            action.songs.forEach(song => {
-                allSongs[song.id] = song
-            });
-            return {
-                ...allSongs
-            }
-        case SONG_GET_ONE:
+    switch(action.type) {
+        case LOAD_SONGS:
+            const loadState = {};
+            action.receivedSongs.forEach(song => {
+                loadState[song.id] = song
+            })
+            return loadState;
+        case ADD_SONG:
             return {
                 ...state,
-                [action.song.id]: action.song
+                [action.receivedSong.id]: action.receivedSong
             }
-        case SONG_CREATE:
-            if (!state[action.message.id]){
-                const newState = {
-                    ...state,
-                    [action.message.id]: action.message
-                }
-                return newState
-            }
-            return {
-                ...state,
-                [action.message.id]: {
-                    ...state[action.message.id],
-                    ...action.message
-                }
-            }
-        case SONG_UPDATE:
-            const updatedSongState = {...state};
-            updatedSongState[action.updatedSong.id] = action.updatedSong;
-            return updatedSongState;
+        case UPDATE_SONG:
+            const updateState = {...state};
+            return {...state, [action.receivedSong.id]: {...state[action.receivedSong.id], ...action.receivedSong}}
+        case DELETE_SONG:
+            const deleteState = {...state};
+            delete deleteState[action.receivedSong.songId]
+            return deleteState;
         default:
             return state;
     }
-}
 
+}
 
 export default songReducer;

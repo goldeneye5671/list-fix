@@ -6,19 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
-import SongList from "./components/SongComponents/SongList/SongList";
-import SongBasic from "./components/SongComponents/Song/SongBasic"
-import SongComplex from "./components/SongComponents/Song/SongComplex"
-import SongForm from "./components/SongComponents/SongNewForm/SongForm";
-
-import AlbumBasic from "./components/AlbumComponents/Album/AlbumBasic";
-import AlbumComplex from "./components/AlbumComponents/Album/AlbumComplex"
-import AlbumList from "./components/AlbumComponents/AlbumList/AlbumList";
-import AlbumForm from "./components/AlbumComponents/AlbumForm/AlbumForm";
-
-import Playlist from "./components/PlaylistComponents/Playlist/PlaylistBasic"
-import PlaylistList from './components/PlaylistComponents/PlaylistList/PlaylistList'
-import PlaylistForm from "./components/PlaylistComponents/PlaylistForm/PlaylistForm";
+import Songs from "./components/SongComponents/Index";
 
 function App() {
   let user = useSelector(state => state.session);
@@ -39,43 +27,22 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/albums/new">
-          { user ? <AlbumForm /> :<p>403: Forbidden</p>}
-          </Route>
-          <Route path='/albums/:albumId'>
-            <AlbumComplex />
-          </Route>
-          <Route path='/albums'>
-            <AlbumList location={"Home"}/>
-          </Route>
           <Route path="/login">
             <LoginFormPage />
-          </Route>
-          <Route exact path="/playlists/new">
-            {user ? <PlaylistForm/> : <p>403: Forbidden</p>}
-          </Route>
-          <Route path="/playlists/:playlistId">
-            <Playlist />
-          </Route>
-          <Route path="/playlists">
-            <PlaylistList/>
           </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
           <Route exact path="/songs/new">
-          { user ? <SongForm isEditForm={false} /> :<p>403: Forbidden</p>}
+          {/* { user ? <SongForm isEditForm={false} /> :<p>403: Forbidden</p>} */}
           </Route>
           <Route path="/songs/:songId">
-            <SongComplex />
+            {/* <SongComplex /> */}
           </Route>
           <Route path="/songs">
-            <SongList />
+            <Songs />
           </Route>
           <Route path="/" exact>
-            <PlaylistList location={"Home"} isBasic={true} />
-            <SongList location={"Home"} isBasic={true}/>
-            <AlbumList location={"Home"} isBasic={true}/>
           </Route>
         </Switch>
       )}

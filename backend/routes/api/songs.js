@@ -3,21 +3,12 @@ const expressAsyncHandler = require('express-async-handler');
 const { User, Song } = require('../../db/models');
 const { sequelize } = require("../../db/models");
 
-router.get('/songs', expressAsyncHandler( async (req, res) => {
+router.get('/', expressAsyncHandler( async (req, res) => {
     if (!req.query.limit) {
-      let allSongs = await Song.findAll({
-        include: [
-          User,
-          Album,
-        ],
-      });
+      let allSongs = await Song.findAll();
       res.json(allSongs);
     }else{
       let allSongsLimited = await Song.findAll({
-        include: [
-          User,
-          Album,
-        ],
         limit: parseInt(req.query.limit),
         order: sequelize.random(),
       })
@@ -26,50 +17,48 @@ router.get('/songs', expressAsyncHandler( async (req, res) => {
   }));
   
 
-  router.post('/songs', expressAsyncHandler( async (req, res) => {
+  router.post('/', expressAsyncHandler( async (req, res) => {
     console.log("Data recieved")
     const {
       userId,
       title,
       songUrl,
-      selectedAlbumId
     } = req.body;
+
     const newSong = await Song.create({
       userId,
       title,
       songUrl,
-      albumId: selectedAlbumId
     });
+
     if (newSong) {
       res.json(newSong);
+      console.log("Created successfully");
     } else {
       throw new Error("Song creation failure");
     }
   }))
   
 
-  router.get('/songs/:songId', expressAsyncHandler( async (req, res) => {
-    const song = await Song.findByPk(req.params.songId,
-      {include: [Album, User]});
+  router.get('/:songId', expressAsyncHandler( async (req, res) => {
+    const song = await Song.findByPk(req.params.songId);
     res.json(song);
   }));
 
 
-  router.put('/songs/:songId', expressAsyncHandler(async (req, res) => {
+  router.put('/:songId', expressAsyncHandler(async (req, res) => {
     const {
       userId,
-      selectedAlbumId,
       songId,
       title,
       songUrl
     } = req.body
   
-    const song = await Song.findByPk(req.params.songId, {include: [Album, User]});
+    const song = await Song.findByPk(req.params.songId);
     if (song){
       song.update(
         {
           userId,
-          selectedAlbumId,
           title,
           songUrl
         })
@@ -79,4 +68,16 @@ router.get('/songs', expressAsyncHandler( async (req, res) => {
     }
   }))
 
-  router.delete('/songs/:songId')
+  router.delete('/:songId', expressAsyncHandler( async (req, res) => {
+    const songToDelete = await Song.findByPk(req.params.songId);
+    if (songToDelete){
+      songToDelete.destroy();
+      return res.json({
+        songId: req.params.songId
+      });
+    } else {
+      throw new Error ("Song requested for deletion not found")
+    }
+  } ));
+
+  module.exports = router;
