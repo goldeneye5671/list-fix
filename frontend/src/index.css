@@ -101,6 +101,13 @@
     height: 256px;
 }
 
+.comments-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    border: black solid 3px;
+}
+
 /* .album-container-basic{
     border: solid black 3px;
     margin: 5% auto;

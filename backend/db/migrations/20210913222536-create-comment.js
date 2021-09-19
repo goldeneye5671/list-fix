@@ -18,6 +18,10 @@ module.exports = {
         allowNull: false,
         references: {model: 'Songs'}
       },
+      title: {
+        type: Sequelize.STRING(100),
+        allowNull:false,
+      },
       body: {
         type: Sequelize.TEXT,
         allowNull: false

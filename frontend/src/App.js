@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
 import Songs from "./components/SongComponents/Index";
+import Comments from "./components/CommentComponents/Index";
 
 function App() {
   let user = useSelector(state => state.session);
@@ -42,6 +43,11 @@ function App() {
           <Route path="/songs">
             <Songs />
           </Route>
+          <Route exact path="/comments/new"></Route>
+          <Route path="/comments">
+            <Comments />
+          </Route>
+          <Route path="/comments/:commentId"></Route>
           <Route path="/" exact>
           </Route>
         </Switch>

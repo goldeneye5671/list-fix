@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const expressAsyncHandler = require('express-async-handler');
-const { User, Song } = require('../../db/models');
+const { User, Song, Comment } = require('../../db/models');
 const { sequelize } = require("../../db/models");
 
 router.get('/', expressAsyncHandler( async (req, res) => {
     if (!req.query.limit) {
-      let allSongs = await Song.findAll();
+      let allSongs = await Song.findAll({limit: req.query.limit, include: [Comment]});
       res.json(allSongs);
     }else{
       let allSongsLimited = await Song.findAll({
@@ -42,7 +42,11 @@ router.get('/', expressAsyncHandler( async (req, res) => {
 
   router.get('/:songId', expressAsyncHandler( async (req, res) => {
     const song = await Song.findByPk(req.params.songId);
-    res.json(song);
+    if (song) {
+      res.json(song);
+    } else {
+      throw new Error("Song not found");
+    }
   }));
 
 

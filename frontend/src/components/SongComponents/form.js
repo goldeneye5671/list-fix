@@ -20,6 +20,7 @@ export default function SongForm({isEdit, showForm, setShowForm, userId, songInf
       }
 
     function submitHandler (e) {
+        e.preventDefault();
         const errors = [];
         if(!title || title.length > 256) {
             errors.push("Title needs to exist and be less than 256 characters");
@@ -73,15 +74,16 @@ export default function SongForm({isEdit, showForm, setShowForm, userId, songInf
                         null
                 }
             </div>
+            <form>
+                <label htmlFor={'title'}>Title: </label>
+                <input name={'title'} value={title} onChange={e => setTitle(e.target.value)}></input>
 
-            <label htmlFor={'title'}>Title</label>
-            <input name={'title'} value={title} onChange={e => setTitle(e.target.value)}></input>
+                <label htmlFor={'songUrl'}>Song Url: </label>
+                <input name={'songUrl'} value={songUrl} onChange={e => setSongUrl(e.target.value)}></input>
 
-            <label htmlFor={'songUrl'}>Song Url</label>
-            <input name={'songUrl'} value={songUrl} onChange={e => setSongUrl(e.target.value)}></input>
-
-            <button onClick={submitHandler}>{!isEdit ? 'Add new song' : 'Edit song'}</button>
-            <button onClick={e => setShowForm(!showForm)}>Cancel</button>
+                <button onClick={submitHandler}>{!isEdit ? 'Add new song' : 'Edit song'}</button>
+                <button onClick={e => setShowForm(!showForm)}>Cancel</button>
+            </form>
         </div>
     )
 }

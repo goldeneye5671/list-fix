@@ -10,7 +10,7 @@ export default function Songs() {
     const userId = userState?.user?.id
     const dispatch = useDispatch();
 
-    const [showForm, setShowForm] = React.useState(false)
+    const [showForm, setShowForm] = React.useState(false);
 
     React.useEffect( () => {
         dispatch(loadSongs())
@@ -20,7 +20,7 @@ export default function Songs() {
         <div>
             {
                 !showForm ? 
-                    userId? (<button onClick={e => setShowForm(!showForm)}>add song</button>) : null
+                    userId ? (<button onClick={e => setShowForm(!showForm)}>add song</button>) : null
                 :
                     <SongForm isEdit={false} showForm={showForm} setShowForm={setShowForm} userId={userId}/>
             }
