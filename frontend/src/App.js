@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 
 import Songs from "./components/SongComponents/Index";
 import Comments from "./components/CommentComponents/Index";
+import Home from "./components/HomeComponents/Index";
 
 function App() {
   let user = useSelector(state => state.session);
@@ -34,21 +35,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/songs/new">
-          {/* { user ? <SongForm isEditForm={false} /> :<p>403: Forbidden</p>} */}
-          </Route>
-          <Route path="/songs/:songId">
-            {/* <SongComplex /> */}
-          </Route>
           <Route path="/songs">
             <Songs />
           </Route>
-          <Route exact path="/comments/new"></Route>
-          <Route path="/comments">
-            <Comments />
-          </Route>
-          <Route path="/comments/:commentId"></Route>
           <Route path="/" exact>
+            <Home />
           </Route>
         </Switch>
       )}
