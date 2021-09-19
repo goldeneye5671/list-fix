@@ -144,7 +144,8 @@ export const addCommentToSong = (receivedComment) => async (dispatch) => {
 }
 
 export const updateCommentInSong = (receivedComment) => async (dispatch) => {
-    const response = await csrfFetch(`/api/comments/${receivedComment.songId}`,
+    console.log(receivedComment);
+    const response = await csrfFetch(`/api/comments/${receivedComment.commentId}`,
         {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
@@ -154,22 +155,21 @@ export const updateCommentInSong = (receivedComment) => async (dispatch) => {
 
     if (response.ok) {
         const comment = await response.json();
-        return dispatch(updateCommentInSongAction(comment));
+        return dispatch(updateSongAction(comment));
     }
 }
 
 export const deleteCommentInSong = (receivedComment) => async (dispatch) => {
-    console.log("In deleteComment")
+    console.log(receivedComment)
     const response = await csrfFetch(`/api/comments/${receivedComment.id}`,
     {
         method: "DELETE",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(receivedComment)
     })
-
     if (response.ok) {
         const comment = await response.json();
-        return dispatch(deleteCommentInSongAction(comment));
+        return dispatch(updateSongAction(comment));
     }
 }
 
@@ -192,7 +192,8 @@ const songReducer = (state = initialState, action) => {
             }
         case UPDATE_SONG:
             const updateState = {...state};
-            return {...state, [action.receivedSong.id]: {...state[action.receivedSong.id], ...action.receivedSong}}
+            updateState[action.receivedSong.id] = action.receivedSong;
+            return updateState
         case DELETE_SONG:
             const deleteState = {...state};
             delete deleteState[action.receivedSong.songId]
@@ -204,10 +205,10 @@ const songReducer = (state = initialState, action) => {
         case UPDATE_COMMENT_IN_SONG:
             const updateCommentInSongState = {...state};
             updateCommentInSongState[action.receivedComment.songId].comments[action.receivedComment.id] = action.receivedComment;
-            return updateCommentInSong
+            return updateCommentInSongState;
         case DELETE_COMMENT_IN_SONG:
             const deleteCommentInSongState = {...state};
-            delete deleteCommentInSongState[action.receivedComment.songId].comments[action.receivedComment.commentId];
+            delete deleteCommentInSongState[action.receivedComment.songId].comments[action.receivedComment.id];
             return deleteCommentInSongState;
         default:
             return state;

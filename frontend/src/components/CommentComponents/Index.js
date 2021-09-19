@@ -16,25 +16,31 @@ export default function Comments({comments, songId}) {
     }, [showForm])
 
     return (
-        <div className={"comments-container"}>
-            <h3>Comments!</h3>
-            {
-                comments ? 
-                    comments?.map(comment => {
-                       return <SingleComment comment={comment} userId={userId} />
-                    })
-                :
-                    <p>No comments</p>
-            }
-            {
-                !showForm ? 
+        <div className={"comments-container-main"}>
+            <div className={"comments-header"}>
+                {
+                    !showForm ? 
                     userId ? 
-                        (<button onClick={e => setShowForm(!showForm)}>Add Comment</button>)
+                    (<>
+                        <h3>Comments:</h3>
+                        <button onClick={e => setShowForm(!showForm)}>Add Comment</button>
+                    </>)
+                            :
+                            null
                         :
-                        null
-                    :
-                <CommentForm isEdit={false} showForm={showForm} setShowForm={setShowForm} userId={userId} songId={songId}/>
-            }
+                    <CommentForm isEdit={false} showForm={showForm} setShowForm={setShowForm} userId={userId} songId={songId}/>
+                }
+            </div>
+            <div className={"comments-container"}>
+                    {
+                        comments ? 
+                            comments?.map(comment => {
+                                return <SingleComment comment={comment} userId={userId} />
+                            })
+                        :
+                            <p>No comments</p>
+                    }
+            </div>
         </div>
     )
 }

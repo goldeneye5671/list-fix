@@ -17,23 +17,25 @@ export default function SingleSong({song, userId}) {
     }
 
     return (
-        <>
-        <h1>{song.title}</h1>
-        {
-            (userId === song.userId) ? 
-                !showForm ?
-                    (
-                        <>
-                            <button onClick={e => setShowForm(!showForm)}>Edit</button>
-                            <button onClick={deleteHandler}>Delete</button>
-                        </>    
-                    )
-                :
-                    <SongForm isEdit={true} showForm={showForm} setShowForm={setShowForm} userId={userId} songInformation={song} />
-            :
-                null
-        }
-        <Comments comments={song.Comments} songId={song?.id} />
-        </>
+        <div className={"song-container"}>
+            <div className={"song-information"}>
+                <h1>{song.title}</h1>
+                {
+                    (userId === song.userId) ? 
+                        !showForm ?
+                            (
+                                <>
+                                    <button onClick={e => setShowForm(!showForm)}>Edit</button>
+                                    <button onClick={deleteHandler}>Delete</button>
+                                </>    
+                            )
+                        :
+                            <SongForm isEdit={true} showForm={showForm} setShowForm={setShowForm} userId={userId} songInformation={song} />
+                    :
+                        null
+                }
+            </div>
+            <Comments className={"comments-container"}comments={song.Comments} songId={song?.id} />
+        </div>
     )
 }

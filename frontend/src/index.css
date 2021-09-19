@@ -1,118 +1,32 @@
-/* TODO Add site wide styles */
-
-.albums-container {
-    display: flex;
-    align-items: space-around;
-    justify-content: center;
-    border: solid blue 3px;
-    overflow-x: scroll;
-    gap: 45px;
-    padding:25px;
-    margin: 25px;
-}
-
-.album-container {
-    border: solid green 3px;
-    margin: 50px;
-}
-
-.album-content {
-    display:flex;
-    flex-direction: column;
-    width: 33%;
-}
-
-.album-info{
-    display:flex;
-    justify-content: space-around;
-}
-
-.image-album {
-    width: 256px;
-    height: 256px;
-    border: solid black 3px;
-}
-
 .song-container {
-    /* border: solid black 3px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    margin: 5px 25px;
-    padding: 0px 10px; */
-    display:flex;
-    flex-direction:row;
-    align-items: center;
-    justify-content: space-around;
-    border: solid black 3px;
-}
-
-
-.songs-container {
-    display:flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-self:center;
-}
-
-.song-info{
-    display:flex;
-    flex-direction: column;
-}
-
-.songs{
-    width: 100%;
-    height: 256px;
-    overflow-x: hidden;
-}
-
-/* .albums-container-basic{
-    margin: 5% auto;
-    border: solid black 3px;
-    display:flex;
-    width: 80%;
-    overflow: scroll;
-    gap: 33px;
-} */
-
-
-.songs-container-basic, .albums-container-basic, .playlists-basic-container{
-    margin: 5% auto;
-    /* border: solid black 3px; */
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    padding: 50px;
-    display:flex;
-    width: 80%;
-    overflow: scroll;
-    gap: 33px;
-}
-
-.song-container-basic, .album-container-basic, .playlist-container-basic{
-    /* margin: 5% auto; */
-    display:flex;
-    flex-direction: column;
-    width: 33%;
-}
-
-.song-image-basic, .album-image-basic, .playlist-image-basic{
     border: black solid 3px;
-    width: 256px;
-    height: 256px;
+    padding: 1.5em;
+}
+
+.songs-container{
+    display:flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 80%;
+    margin: 10px auto;
 }
 
 .comments-container{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    border: black solid 3px;
+    height: 250px;
+    overflow: scroll;
 }
 
-/* .album-container-basic{
-    border: solid black 3px;
-    margin: 5% auto;
-    display: flex;
-    width: 80%;
-    overflow: scroll;
-    gap: 30px;
-} */
+.comments-container-main{
+    width: 450px;
+}
+
+.song-information{
+    width: 30%;
+}
+
+.songs-header{
+    text-align: center;
+}

@@ -17,16 +17,24 @@ export default function Songs() {
     }, [showForm])
 
     return (
-        <div>
+        <div className={"songs-container"}>
             {
                 !showForm ? 
-                    userId ? (<button onClick={e => setShowForm(!showForm)}>add song</button>) : null
+                    userId ? 
+                        (
+                            <div className={"songs-header"}>
+                                <h1>All songs</h1>
+                                <button onClick={e => setShowForm(!showForm)}>add song</button>
+                            </div>
+                        ) 
+                    : 
+                        null
                 :
                     <SongForm isEdit={false} showForm={showForm} setShowForm={setShowForm} userId={userId}/>
             }
             {
                 Object.values(songState)?.map(song => (
-                    <SingleSong song={song} userId={userId}/>
+                    <SingleSong className={"song-container"} song={song} userId={userId}/>
                 ))
             }
         </div>

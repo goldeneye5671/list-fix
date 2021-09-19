@@ -52,7 +52,6 @@ router.post('/', expressAsyncHandler(async (req, res) => {
 
 router.put('/:commentId', expressAsyncHandler(async (req, res) => {
     const {
-        userId,
         title,
         body
     } = req.body;
@@ -60,22 +59,24 @@ router.put('/:commentId', expressAsyncHandler(async (req, res) => {
     const comment = await Comment.findByPk(req.params.commentId);
     if (comment) {
         await comment.update({
-                userId,
                 title,
                 body
             }
         )
         res.json(comment);
+    } else{
+        throw new Error ("Comment may not exist")
     }
 }));
 
 router.delete('/:commentId', expressAsyncHandler(async (req, res) => {
-    const {songId, commentId} = req.body
-    const commentToDelete = await Comment.findByPk(commentId);
+    const {songId, id} = req.body
+    console.log(songId);
+    const commentToDelete = await Comment.findByPk(id);
     if (commentToDelete) {
         commentToDelete.destroy();
         return res.json({
-            commentId,
+            id,
             songId
         })
     }

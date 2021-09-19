@@ -31,7 +31,8 @@ export default function CommentForm({isEdit, showForm, setShowForm, userId, comm
             } else {
                 dispatch(updateCommentInSong(
                 {
-                    userId,
+                    userId: commentInformation.userId,
+                    commentId: commentInformation.id,
                     title,
                     songId: commentInformation.songId,
                     body
