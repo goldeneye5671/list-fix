@@ -5,21 +5,27 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
-import SongList from "./components/SongComponents/SongList/SongList";
-import Song from "./components/SongComponents/Song/Song"
-import SongForm from "./components/SongComponents/SongNewForm/SongForm";
+import Songs from "./components/SongComponents/Index";
+import Home from "./components/HomeComponents/Index";
+import {getSongUrl} from './store/songPlayer';
+import User from "./components/UserComponent/Index";
 
-import Album from "./components/AlbumComponents/Album/Album";
-import AlbumList from "./components/AlbumComponents/AlbumList/AlbumList";
-import AlbumForm from "./components/AlbumComponents/AlbumForm/AlbumForm";
+// const Player = () => (
+//   <AudioPlayer
+//     autoPlay
+//     src="http://example.com/audio.mp3"
+//     onPlay={e => console.log("onPlay")}
+//     // other props here
+//   />
+// );
 
-import Playlist from "./components/PlaylistComponents/Playlist/Playlist"
-import PlaylistList from './components/PlaylistComponents/PlaylistList/PlaylistList'
-import PlaylistForm from "./components/PlaylistComponents/PlaylistForm/PlaylistForm";
 
 function App() {
   let user = useSelector(state => state.session);
+  const songState = useSelector(state => state.songPlayer);
   if (user.user) {
     user = true
   } else{
@@ -29,7 +35,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    console.log()
   }, [dispatch]);
 
   return (
@@ -37,46 +42,26 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/albums/new">
-          { user ? <AlbumForm /> :<p>403: Forbidden</p>}
-          </Route>
-          <Route path='/albums/:albumId'>
-            <Album />
-          </Route>
-          <Route path='/albums'>
-            <AlbumList location={"Home"}/>
-          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>
-          <Route exact path="/playlists/new">
-            {user ? <PlaylistForm/> : <p>403: Forbidden</p>}
-          </Route>
-          <Route path="/playlists/:playlistId">
-            <Playlist />
-          </Route>
-          <Route path="/playlists">
-            <PlaylistList/>
+          <Route path="/users/:userId">
+            <User />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/songs/new">
-          { user ? <SongForm isEditForm={false} /> :<p>403: Forbidden</p>}
-          </Route>
-          <Route path="/songs/:songId">
-            <Song />
-          </Route>
           <Route path="/songs">
-            <SongList />
+            <Songs />
           </Route>
           <Route path="/" exact>
-            <PlaylistList location={"Home"} />
-            <SongList location={"Home"} />
-            <AlbumList location={"Home"} />
+            <Home />
+          </Route>
+          <Route path="/songplayer">
           </Route>
         </Switch>
       )}
+      <AudioPlayer className={"AudioPlayer"} src={songState?.song} />
     </>
   );
 }

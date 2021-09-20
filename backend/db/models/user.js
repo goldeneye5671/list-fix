@@ -92,12 +92,8 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models) {
     // associations can be defined here
-    User.hasMany(models.Album, {foreignKey: 'userId'});
-    User.hasMany(models.Song, {foreignKey: 'userId'});
-    User.hasMany(models.SongLike, {foreignKey: 'userId'});
-    User.hasMany(models.Comment, {foreignKey: 'userId'});
-    User.hasMany(models.Playlist, {foreignKey: 'userId'});
-    User.hasMany(models.PlaylistLike, {foreignKey: 'userId'});
+    User.hasMany(models.Song, {foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
+    User.hasMany(models.Comment, {foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
   };
   return User;
 };

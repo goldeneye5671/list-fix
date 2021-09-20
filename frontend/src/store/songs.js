@@ -7,92 +7,169 @@
 
 import { csrfFetch } from "./csrf";
 
-const SONG_CREATE = 'song/SONG_CREATE';
-const SONG_UPDATE = 'song/SONG_UPDATE';
-const SONG_GET = 'song/SONG_GET';
-const SONG_GET_ONE = 'song/SONG_GET_ONE';
-const SONG_GET_USER = 'song/SONG_GET_USER';
-const SONG_DELETE = 'song/SONG_DELETE';
+const LOAD_SONGS = 'song/GET_SONG';
+const ADD_SONG = 'song/ADD_SONG';
+const UPDATE_SONG = 'song/UPDATE_SONG';
+const DELETE_SONG = 'song/DELETE_SONG';
+
+const ADD_COMMENT_TO_SONG = 'song/ADD_COMMENT';
+const UPDATE_COMMENT_IN_SONG = 'song/UPDATE_COMMENT';
+const DELETE_COMMENT_IN_SONG = 'song/DELETE_COMMENT';
 
 
-//Actions that can be dispatched
+// //Actions that can be dispatched
 
-//get all songs, no matter the user
-const songGetAll = (songs) => ({
-    type: SONG_GET,
-    songs,
-});
+const loadSongsAction = (receivedSongs) => (
+    {
+        type: LOAD_SONGS,
+        receivedSongs
+    }
+)
 
-//get all songs that belong to user
-const songGetUser = (songs) => ({
-    type: SONG_GET_USER,
-    songs
-});
+const addSongAction = (receivedSong) => (
+    {
+        type: ADD_SONG,
+        receivedSong
+    }
+)
 
-//get a singular song
-const songGetOne = (song) => ({
-    type: SONG_GET_ONE,
-    song,
-});
+const updateSongAction = (receivedSong) => (
+    {
+        type: UPDATE_SONG,
+        receivedSong
+    }
+)
 
-//update a singular song
-const songUpdate = (updatedSong) => ({
-    type: SONG_UPDATE,
-    updatedSong,
-});
+const deleteSongAction = (receivedSong) => (
+    {
+        type: DELETE_SONG,
+        receivedSong
+    }
+)
 
-//create a singular song
-const songCreate = (message) => ({
-    type: SONG_CREATE,
-    message,
-})
+const addCommentToSongAction = (receivedComment) => {
+    return (
+    {
+        type: ADD_COMMENT_TO_SONG,
+        receivedComment
+    }
+)}
 
-//delete a singular song
-const songDelete = (deletedSong) => ({
-    type: SONG_DELETE,
-    deletedSong,
-})
+const updateCommentInSongAction = (receivedComment) => (
+    {
+        type: UPDATE_COMMENT_IN_SONG,
+        receivedComment
+    }
+)
 
-//Thunks
+const deleteCommentInSongAction = (receivedComment) => (
+    {
+        type: DELETE_COMMENT_IN_SONG,
+        receivedComment
+    }
+)
 
+// //Thunks
 
-
-export const createSong = (songToAdd) => async (dispatch) => {
+export const addSong = (receivedSong) => async (dispatch) => {
     const response = await csrfFetch(
         `/api/songs`,
         {
             method: `POST`,
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(songToAdd)
-        });
+            body: JSON.stringify(receivedSong)
+        }
+    );
+
     if (response.ok) {
-        const addedSong = await response.json();
-        dispatch(songCreate(addedSong));
+        const song = await response.json();
+        return dispatch(addSongAction(song));
+    } else {
+        throw new Error("Returned a response that was not ok");
     }
 }
 
-//get all songs, reguardless of user
-export const getAllSongs = (limit = null) => async (dispatch) => {
-    const response = limit ? await fetch(`/api/songs?limit=${limit}`) : await fetch(`/api/songs`);
-    if (response.ok) {
-        const songs = await response.json();
-        dispatch(songGetAll(songs));
-    }
-}
-
-export const getAllSongsUser = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/users/${userId}/songs`);
+export const loadSongs = () => async (dispatch) => {
+    const response = await fetch( `/api/songs` );
     if (response.ok){
         const songs = await response.json();
-        dispatch(songGetUser(songs));
+        return dispatch(loadSongsAction(songs));
+    } else {
+        throw new Error("Returned a response that was not ok");
     }
 }
 
-export const getSongOne = (songId) => async (dispatch) => {
-    const response = await fetch(`/api/songs/${songId}`);
+export const updateSong = (receivedSong) => async (dispatch) => {
+    const response = await csrfFetch(
+        `/api/songs/${receivedSong.songId}`,
+        {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(receivedSong)
+        }
+    );
+    if (response.ok) {
+        const song = await response.json();
+        return dispatch(updateSongAction(song));
+    }
+}
+
+export const deleteSong = (recievedSongId) => async (dispatch) => {
+    const response = await csrfFetch(
+        `/api/songs/${recievedSongId}`,
+        {
+            method: "DELETE",
+            headers: {'Content-Type': 'application/json'},
+        }
+    )
+
     if (response.ok){
         const song = await response.json();
-        dispatch(songGetOne(song));
+        return dispatch(updateSongAction(song))
+    }
+}
+
+export const addCommentToSong = (receivedComment) => async (dispatch) => {
+    const response = await csrfFetch(`/api/comments`,
+        {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(receivedComment)
+        }
+    );
+    if (response.ok) {
+        const comment = await response.json();
+        return dispatch(updateSongAction(comment));
+    }
+}
+
+export const updateCommentInSong = (receivedComment) => async (dispatch) => {
+    console.log(receivedComment);
+    const response = await csrfFetch(`/api/comments/${receivedComment.commentId}`,
+        {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(receivedComment)
+        }
+    )
+
+    if (response.ok) {
+        const comment = await response.json();
+        return dispatch(updateSongAction(comment));
+    }
+}
+
+export const deleteCommentInSong = (receivedComment) => async (dispatch) => {
+    console.log(receivedComment)
+    const response = await csrfFetch(`/api/comments/${receivedComment.id}`,
+    {
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(receivedComment)
+    })
+    if (response.ok) {
+        const comment = await response.json();
+        return dispatch(updateSongAction(comment));
     }
 }
 
@@ -101,40 +178,41 @@ const initialState = {
 }
 
 const songReducer = (state = initialState, action) => {
-    switch(action.type){
-        case SONG_GET: 
-            const allSongs = {}
-            action.songs.forEach(song => {
-                allSongs[song.id] = song
-            });
-            return {
-                ...allSongs
-            }
-        case SONG_GET_ONE:
-            const oneSong = {...action.song}
-            return {
-                ...oneSong
-            }
-        case SONG_CREATE:
-            console.log("Message in Reducer: ", action.message)
-            if (!state[action.message.id]){
-                const newState = {
-                    ...state,
-                    [action.message.id]: action.message
-                }
-                return newState
-            }
+    switch(action.type) {
+        case LOAD_SONGS:
+            const loadState = {};
+            action.receivedSongs.forEach(song => {
+                loadState[song.id] = song
+            })
+            return loadState;
+        case ADD_SONG:
             return {
                 ...state,
-                [action.message.id]: {
-                    ...state[action.message.id],
-                    ...action.message
-                }
+                [action.receivedSong.id]: action.receivedSong
             }
+        case UPDATE_SONG:
+            const updateState = {...state};
+            updateState[action.receivedSong.id] = action.receivedSong;
+            return updateState
+        case DELETE_SONG:
+            const deleteState = {...state};
+            delete deleteState[action.receivedSong.songId]
+            return deleteState;
+        case ADD_COMMENT_TO_SONG:
+            const addCommentToSongState = {...state};
+            addCommentToSongState[action.receivedComment.songId].comments[action.receivedComment.id] = action.receivedComment
+            return addCommentToSongState;
+        case UPDATE_COMMENT_IN_SONG:
+            const updateCommentInSongState = {...state};
+            updateCommentInSongState[action.receivedComment.songId].comments[action.receivedComment.id] = action.receivedComment;
+            return updateCommentInSongState;
+        case DELETE_COMMENT_IN_SONG:
+            const deleteCommentInSongState = {...state};
+            delete deleteCommentInSongState[action.receivedComment.songId].comments[action.receivedComment.id];
+            return deleteCommentInSongState;
         default:
             return state;
     }
 }
-
 
 export default songReducer;

@@ -13,11 +13,6 @@ module.exports = {
         allowNull: false,
         references: {model: 'Users'}
       },
-      albumId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {model: 'Albums'}
-      },
       songUrl: {
         type: Sequelize.TEXT,
         allowNull: false

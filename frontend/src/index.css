@@ -1,1 +1,82 @@
-/* TODO Add site wide styles */
+.song-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: black solid 3px;
+    padding: 1.5em;
+}
+
+.songs-container{
+    display:flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 80%;
+    margin: 10px auto;
+}
+
+.comments-container{
+    padding: 1em 25px;
+    margin: 10px;
+    height: 250px;
+    border-left: solid lightslategray 2px;
+    border-right: solid lightslategray 2px;
+    overflow: scroll;
+}
+
+.comments-container-main{
+    width: 450px;
+}
+
+.song-information{
+    width: 30%;
+}
+
+.songs-header{
+    text-align: center;
+}
+
+.nav{
+    /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%); */
+    margin-top: 0;
+    /* position: fixed; */
+    width: 100%;
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    /* position: fixed;
+    width: auto; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: solid black;
+    /* border-radius: 15px; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* opacity:80%; */
+}
+
+a{
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    height: 25px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    color:lightgray;
+  
+    line-height: 25px;
+    text-decoration: none;
+  }
+
+  li{
+      display: flex;
+      list-style: none;
+      gap: 45px;
+  }
+
+  .AudioPlayer{
+      position:fixed;
+      bottom: 0;
+      left: 0;
+  }
