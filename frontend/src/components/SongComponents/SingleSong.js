@@ -25,7 +25,7 @@ export default function SingleSong({song, userId}) {
     return (
         <div className={"song-container"}>
             <div className={"song-information"}>
-                <h1>{song.title}</h1>
+                <h4>{song.title}</h4>
                 <button onClick={e => {dispatch(getSongUrl(song?.songUrl))}}>Play</button>
                 {
                     (userId === song.userId) ? 

@@ -23,7 +23,7 @@ export default function Songs() {
                     userId ? 
                         (
                             <div className={"songs-header"}>
-                                <h1>All songs</h1>
+                                <h2>All songs</h2>
                                 <button onClick={e => setShowForm(!showForm)}>add song</button>
                             </div>
                         ) 

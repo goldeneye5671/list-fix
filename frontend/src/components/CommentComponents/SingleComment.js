@@ -22,7 +22,7 @@ export default function SingleComment({comment, userId}) {
 
     return (
         <div className="comment-container">
-            <h2>{comment.title}</h2>
+            <h6>{comment.title}</h6>
             <p>{comment.body}</p>
             {
                 (userId === comment.userId) ?

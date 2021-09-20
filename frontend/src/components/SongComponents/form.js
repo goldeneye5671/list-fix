@@ -51,8 +51,8 @@ export default function SongForm({isEdit, showForm, setShowForm, userId, songInf
     }
     
     return (
-        <div>
-            <h1>Song form!</h1>
+        <div className={!isEdit? "add-song-form" : "edit-song-form"}>
+            <h1>{!isEdit ? 'Add new song' : 'Edit song'}</h1>
             
             <div className={"errors"} >
                 {
@@ -73,7 +73,7 @@ export default function SongForm({isEdit, showForm, setShowForm, userId, songInf
                         null
                 }
             </div>
-            <form>
+            <form className={!isEdit? "add-song-form-specific" : "edit-song-form-specific"}>
                 <label htmlFor={'title'}>Title: </label>
                 <input name={'title'} value={title} onChange={e => setTitle(e.target.value)}></input>
 

@@ -21,7 +21,7 @@ export default function Comments({comments, songId}) {
             <div className={"comments-header"}>
                 {
                     <>
-                        <h3>Comments:</h3>
+                        <h5>Comments:</h5>
                         {userId ?
                             !showForm ? <button onClick={e => setShowForm(!showForm)}>Add Comment</button>
                                 :

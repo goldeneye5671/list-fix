@@ -1,38 +1,65 @@
 .song-container {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: black solid 3px;
     padding: 1.5em;
 }
 
 .songs-container{
     display:flex;
-    gap: 15px;
+    gap: 60px;
     flex-direction: column;
-    width: 80%;
+    width: 90%;
     margin: 10px auto;
+}
+
+.comment-container{
+    display: flex;
+    flex-direction: column;
+
 }
 
 .comments-container{
     padding: 1em 25px;
     margin: 10px;
     height: 250px;
-    border-left: solid lightslategray 2px;
-    border-right: solid lightslategray 2px;
     overflow: scroll;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
 }
 
 .comments-container-main{
-    width: 450px;
+    width: 400px;
 }
 
 .song-information{
     width: 30%;
 }
 
-.songs-header{
+.songs-header, .add-song, .signin-form, .signup-form{
     text-align: center;
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.edit-song-form-specific, .add-song-form-specific, .signin-form-specific, .signup-form-specific{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.home-container {
+    text-align: center;
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.user-links{
+    display:flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav{
@@ -51,6 +78,7 @@
     /* border-radius: 15px; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     /* opacity:80%; */
+    color: white;
 }
 
 a{
@@ -79,4 +107,104 @@ a{
       position:fixed;
       bottom: 0;
       left: 0;
+  }
+
+  
+  h1{
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    width: 90%;
+    margin:  20px auto;
+    color:lightgray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.9em;
+    padding: 0.95em;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    /* border: solid black; */
+    border-radius: 12px;
+    transition: font-size;
+    transition-duration:0.5s;
+  }
+  
+  h1:hover{
+    font-size: 3.1em;
+  }
+  
+  h2{
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    color:lightgray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.4em;
+    padding: 0.85em;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  
+    /* border: solid black; */
+    border-radius: 12px;
+    transition: font-size;
+    transition-duration:0.5s;
+    width: 80%;
+    margin:  20px auto;
+  }
+  
+  h2:hover{
+    font-size: 2.6em;
+  }
+  
+  h3{
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    color:lightgray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: solid black; */
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 12px;
+    font-size: 2.0em;
+    padding:0.8em;
+    width: 70%;
+    margin:  20px auto;
+  }
+  
+  h4{
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    color:lightgray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: solid black; */
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 12px;
+    padding:0.95em;
+    font-size: 1.5em;
+    width: 85%;
+    margin: 20px auto;
+    word-wrap: break-word; 
+  }
+  
+  h5{
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    color:lightgray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: solid black; */
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 12px;
+    padding:0.75em;
+    font-size: 1.25em;
+    width: 50%;
+    margin:  20px auto;
+  }
+  
+  h6{
+    background: linear-gradient(42deg, rgba(120,0,255,1) 47%, rgba(0,1,98,1) 100%);
+    color:lightgray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: solid blue; */
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 12px;
+    padding:0.5em;
+    font-size: 1.15em;
+    width: 40%;
+    margin:  20px auto;
+  
   }
