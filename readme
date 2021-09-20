@@ -1,1 +1,17 @@
+ListFix
 
+This is a basic soundcloud clone!
+
+Features:
+
+- Adding, removing, and updating songs
+- Adding, removing, and updating comments
+- Song playback,
+- User pages
+-User login and logout
+
+Roadmap for future features:
+
+- Adding, removing and updating albums
+- Adding, removing and updating playlists
+- Adding, removing, and updating likes on playlists and songs
