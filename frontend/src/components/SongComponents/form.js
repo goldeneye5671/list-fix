@@ -30,7 +30,6 @@ export default function SongForm({isEdit, showForm, setShowForm, userId, songInf
         }
         if (errors.length === 0){
             setShowForm(!showForm);
-            alert("Song is being processed");
             if (!isEdit) {
                 dispatch(addSong({
                     userId,

@@ -3,14 +3,20 @@ import SongForm from './form';
 import { deleteSong, loadSongs } from '../../store/songs';
 import { useDispatch } from 'react-redux';
 import Comments from '../CommentComponents/Index';
+import { getSongUrl } from '../../store/songPlayer';
 export default function SingleSong({song, userId}) {
     
     const [showForm, setShowForm] = React.useState(false);
+    const [songUrl, setSongUrl] = React.useState('')
     const dispatch= useDispatch();
 
     React.useEffect( () => {
         dispatch(loadSongs())
     }, [showForm, dispatch])
+
+    // React.useEffect( () => {
+    //     dispatch(getSongUrl(song?.songUrl))
+    // }, [songUrl, dispatch])
 
     function deleteHandler (e) {
         dispatch(deleteSong(song.id));
@@ -20,6 +26,7 @@ export default function SingleSong({song, userId}) {
         <div className={"song-container"}>
             <div className={"song-information"}>
                 <h1>{song.title}</h1>
+                <button onClick={e => {dispatch(getSongUrl(song?.songUrl))}}>Play</button>
                 {
                     (userId === song.userId) ? 
                         !showForm ?

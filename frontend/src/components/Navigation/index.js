@@ -22,7 +22,7 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <ul>
+    <ul className={"nav"}>
       <li>
         <NavLink exact to="/">Home</NavLink>
         <NavLink exact to="/songs">Discover</NavLink>

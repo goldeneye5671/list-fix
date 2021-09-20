@@ -5,13 +5,27 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 import Songs from "./components/SongComponents/Index";
-import Comments from "./components/CommentComponents/Index";
 import Home from "./components/HomeComponents/Index";
+import {getSongUrl} from './store/songPlayer';
+import User from "./components/UserComponent/Index";
+
+// const Player = () => (
+//   <AudioPlayer
+//     autoPlay
+//     src="http://example.com/audio.mp3"
+//     onPlay={e => console.log("onPlay")}
+//     // other props here
+//   />
+// );
+
 
 function App() {
   let user = useSelector(state => state.session);
+  const songState = useSelector(state => state.songPlayer);
   if (user.user) {
     user = true
   } else{
@@ -21,7 +35,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    console.log()
   }, [dispatch]);
 
   return (
@@ -32,6 +45,9 @@ function App() {
           <Route path="/login">
             <LoginFormPage />
           </Route>
+          <Route path="/users/:userId">
+            <User />
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
@@ -41,8 +57,11 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
+          <Route path="/songplayer">
+          </Route>
         </Switch>
       )}
+      <AudioPlayer className={"AudioPlayer"} src={songState?.song} />
     </>
   );
 }

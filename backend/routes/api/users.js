@@ -26,6 +26,15 @@ const validateSignup = [
     handleValidationErrors,
   ];
 
+  router.get('/', asyncHandler(async (req, res) => {
+    const users = await User.findAll();
+    if (users){
+      res.json(users);
+    }else {
+      throw new Error("Users not found")
+    }
+  }))
+
   router.post(
     '/',
     validateSignup,
@@ -58,28 +67,5 @@ const validateSignup = [
       songs
     });
   }));
-
-  router.get('/:id/albums', asyncHandler(async(req, res) => {
-    const albums = await Album.findAll({
-      where: {
-        userId: req.params.id
-      }
-    });
-    res.json({
-      albums
-    })
-  }));
-
-  router.get('/:id/playlists', asyncHandler(async(req,res)=>{
-    const playlists = await Playlist.findAll({
-      where: {
-        userId: req.params.id
-      }
-    });
-    res.json({
-      playlists
-    })
-  }))
-  router.put('/')
 
 module.exports = router;

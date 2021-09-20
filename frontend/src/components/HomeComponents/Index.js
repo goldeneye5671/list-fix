@@ -14,8 +14,8 @@ export default function Home() {
                 userState?.user ? (
                     <div className={"home-container"}>
                         <div>
-                        <h1>Welcome back, {userState.user.username}</h1>
-                    </div>
+                            <h1>Welcome back, {userState.user.username}</h1>
+                        </div>
                     <div></div>
                     </div>
                 )
