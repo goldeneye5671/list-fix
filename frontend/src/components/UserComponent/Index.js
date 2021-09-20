@@ -9,9 +9,11 @@ export default function User() {
     const dispatch = useDispatch();
     const {userId} = useParams();
     const songsUser = useSelector(state => state.song);
+    const userState = useSelector(state => state.user);
 
     React.useEffect(() => {
         dispatch(loadSongs());
+        dispatch(getUsers());
     }, [])
 
     // React.useEffect(() => {
@@ -20,6 +22,7 @@ export default function User() {
 
     return (
         <div>
+            <h1>{userState[userId]?.username}</h1>
             {Object.values(songsUser)?.map(song => {
                 if (parseInt(song?.userId) === parseInt(userId)) {
                     console.log("In the if")
