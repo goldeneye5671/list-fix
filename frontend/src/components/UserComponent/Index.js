@@ -25,7 +25,6 @@ export default function User() {
             <h1>{userState[userId]?.username}</h1>
             {Object.values(songsUser)?.map(song => {
                 if (parseInt(song?.userId) === parseInt(userId)) {
-                    console.log("In the if")
                     return <SingleSong song={song} userId={userId} />
                 } else {
                     console.log("In the else")

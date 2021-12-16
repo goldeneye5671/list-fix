@@ -7,28 +7,28 @@ import './Navigation.css';
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
-  let sessionLinks;
-  if (sessionUser) {
-    sessionLinks = (
-      <ProfileButton user={sessionUser} />
-    );
-  } else {
-    sessionLinks = (
-      <>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </>
-    );
-  }
-
   return (
-    <ul className={"nav"}>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
+    <nav className={"nav"}>
+      <div className={"nav-links"}>
+        <NavLink exact to="/">
+          List Fix
+        </NavLink>
+      </div>
+     
+      <div className={"nav-links"}>
         <NavLink exact to="/songs">Discover</NavLink>
-        {isLoaded && sessionLinks}
-      </li>
-    </ul>
+        {
+          sessionUser ? (
+            <ProfileButton user={sessionUser} />
+          )
+          :
+          <>
+            <NavLink to="/login">Log In</NavLink>
+            <NavLink to="/signup">Sign Up</NavLink>
+          </>
+        }
+      </div>
+    </nav>
   );
 }
 
