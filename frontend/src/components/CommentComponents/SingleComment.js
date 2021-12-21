@@ -10,10 +10,6 @@ export default function SingleComment({comment, userId}) {
     
     const [showForm, setShowForm] = React.useState(false);
     const dispatch= useDispatch();
-
-    React.useEffect( () => {
-        dispatch(loadSongs())
-    }, [showForm])
     
     function deleteHandler (e) {
         console.log("Event triggered")
@@ -21,7 +17,7 @@ export default function SingleComment({comment, userId}) {
     }
 
     return (
-        <div className="comment-container">
+        <div className="coment">
             <h6>{comment.title}</h6>
             <p>{comment.body}</p>
             {

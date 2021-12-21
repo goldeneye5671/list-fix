@@ -44,7 +44,6 @@ export default function CommentForm({isEdit, showForm, setShowForm, userId, comm
 
     return (
         <div>
-            <h1>Comment Form!</h1>
             <div className={"errors"}>
             {
                     errors.length > 0 ?
@@ -71,7 +70,7 @@ export default function CommentForm({isEdit, showForm, setShowForm, userId, comm
                 <label htmlFor={"body"}> Comment: </label>
                 <input name={"body"} value={body} onChange={e => setBody(e.target.value)}></input>
 
-                <button onClick={submitHandler}>{!isEdit ? 'Add new song' : 'Edit song'}</button>
+                <button onClick={submitHandler}>{!isEdit ? 'Add new comment' : 'Edit comment'}</button>
                 <button onClick={e => setShowForm(!showForm)}>Cancel</button>
             </form>
         </div>
