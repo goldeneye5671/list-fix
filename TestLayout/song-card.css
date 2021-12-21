@@ -66,9 +66,14 @@
     margin: 60px auto;
 }
 
-.comment{
+.coment{
+    border-bottom: solid black 1px;
 }
 
 .comments{
     overflow-y: scroll;
+    width: 95%;
+    height: 234px;
+    padding: 0 15px;
+    margin: 0 auto;
 }

@@ -50,7 +50,7 @@ export default function SingleSong({song, userId}) {
                     }
                 </div>
             </div>
-            <Comments className={"comments-container"}comments={song.Comments} songId={song?.id} />
+            <Comments className={"comments-container"} comments={song.Comments} songId={song?.id} />
         </div>
     )
 }

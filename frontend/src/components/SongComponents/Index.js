@@ -5,7 +5,7 @@ import SongForm from './form';
 import SingleSong from './SingleSong';
 
 export default function Songs() {
-    const songState = useSelector(state => state.song);
+    const songState = useSelector(state => Object.values(state.song));
     const userState = useSelector(state => state.session);
     const userId = userState?.user?.id
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export default function Songs() {
                 !showForm ? 
                     userId ? 
                         (
-                            <div className={"songs-header"}>
+                            <div className={"home-container"}>
                                 <h2>All songs</h2>
                                 <button onClick={e => setShowForm(!showForm)}>add song</button>
                             </div>
@@ -33,7 +33,7 @@ export default function Songs() {
                     <SongForm isEdit={false} showForm={showForm} setShowForm={setShowForm} userId={userId}/>
             }
             {
-                Object.values(songState)?.map(song => (
+                songState?.map(song => (
                     <SingleSong className={"song-container"} song={song} userId={userId}/>
                 ))
             }
