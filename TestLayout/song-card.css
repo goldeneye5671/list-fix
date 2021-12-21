@@ -6,17 +6,6 @@
     width: 45%;
 }
 
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-    border: 1px solid #000;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    width: 90%;
-}
-
 .container{
     width: 100%;
     display: flex;
@@ -24,11 +13,19 @@
     align-items: center;
 } */
 
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    border-bottom: 1px solid #000;
+
+}
+
 .song-container{
     /* border: solid black 1px; */
     border-radius: 30px;
-    width: 25%;
-    height: 225px;
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -54,4 +51,24 @@
     justify-content: space-around;
     border: solid black 1px;
     padding: 15px;
+}
+
+.comment-container{
+    width: 73%;
+}
+
+.main-container{
+    display: flex;
+    height: 300px;
+    width: 85%;
+    /* border: solid black 1px; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    margin: 60px auto;
+}
+
+.comment{
+}
+
+.comments{
+    overflow-y: scroll;
 }
