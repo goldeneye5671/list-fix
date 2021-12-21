@@ -44,7 +44,6 @@ export default function CommentForm({isEdit, showForm, setShowForm, userId, comm
 
     return (
         <div>
-            <h1>Comment Form!</h1>
             <div className={"errors"}>
             {
                     errors.length > 0 ?
