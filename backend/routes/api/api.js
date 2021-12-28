@@ -4,13 +4,15 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const songsRouter = require('./songs');
 const commentsRouter = require('./comments')
+const playlistsRouter = require('./playlists')
 const { sequelize } = require('../../db/models');
 const { restoreUser } = require('../../utils/auth.js');
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/songs', songsRouter);
-router.use('/comments', commentsRouter)
+router.use('/comments', commentsRouter);
+router.use('/playlists', playlistsRouter);
 
 
 router.post('/test', (req, res) => {
