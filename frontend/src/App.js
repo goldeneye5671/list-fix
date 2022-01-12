@@ -57,11 +57,11 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/songplayer">
-          </Route>
         </Switch>
       )}
-      <AudioPlayer className={"AudioPlayer"} src={songState?.song} />
+      {/* <AudioPlayer className={"AudioPlayer"} src={songState?.song} /> */}
+      <audio className={"AudioPlayer"} src={songState?.song} controls></audio>
+      {/* <audio src="https://audioforartists.s3.us-west-1.amazonaws.com/Luniz+I+Got+5+On+It+Clean+Radio+Edit.mp3" controls></audio> */}
     </>
   );
 }
